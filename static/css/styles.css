@@ -1,0 +1,124 @@
+body {
+	margin: 0 auto;
+	max-width: 50em;
+	line-height: 1.5;
+	padding: 4em 2em;
+	background-color: rgba(77, 77, 0, 0.1);
+	font-stretch: expanded;
+}
+
+h1 {
+	
+	color: rgba(37, 37, 0, 0.6);
+	font-family: "Times New Roman";
+	font-size: 30px;
+	top: 10%;
+	text-transform: lowercase;
+	line-height: 1.2;
+	letter-spacing: 15px;
+}
+
+
+h2 {
+	color: #6396A9;
+	font-family: "Times New Roman";
+	font-size: 30px;
+	text-transform: uppercase;
+	text-align: center;
+	top: 50%;
+	letter-spacing: 20px;
+}
+	
+
+h3 {
+	color: rgb(47, 37, 0);
+	font-family: "Times New Roman";
+	font-size: 16px;
+	text-transform: uppercase;
+	line-height: 3;
+}
+	
+
+p {
+	color: #395F5F;
+	font-family: 'Helvetica', 'Arial', 'sans-serif';
+	font-size: 12px;
+	letter-spacing: 2px; 
+}
+
+.p15 {
+	line-height: 1.5;
+}
+
+.p2 {
+	line-height: 2;
+}
+
+
+a:link, a:visited {
+	text-decoration: none;
+  	color: #506E7D;
+}
+
+a:hover, a:active {
+	font-weight: bold;
+}
+
+table {
+	width: 100%;
+	align-content: right;
+}
+
+.opaque {
+	color: rgba(37, 37, 0, 0.3)
+}
+
+.opaque2 {
+	color: rgba(37, 37, 0, 0.15)
+}
+
+.keskella {
+	align-self: center;
+	position: absolute;
+}
+
+.ylapalkki {
+	width: 93%;
+	height: 200px;
+	top: 0px;
+	left: 0px;
+	text-align: right;
+	padding-right:7%;
+	position: absolute;
+	
+	
+}
+
+.yleistietopalkki {
+	width: 35%;
+	height: 120%;
+	top: 220px;
+	left: 0px;
+	padding-right: 5%;
+	padding-left: 10%;
+	text-align: right;
+	border-right: 3px dotted rgba(99, 37, 0, 0.6);
+	position: absolute;
+	
+
+}
+
+.paapalkki {
+	width: 70%;
+	height: 100%;
+	left: 15%;
+	top: 220px;
+	padding: 40px;
+	text-align: left;
+	position: absolute;
+	background-color: rgba(250, 256, 256, 0.6);
+	border: 3px dotted rgba(37, 37, 0, 0.6);
+	border-radius: 100px;
+	
+}
+

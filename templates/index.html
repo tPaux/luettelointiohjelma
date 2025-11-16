@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Kirjautuminen</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body>
+
+<!--Yläpalkki-->
+<div class="ylapalkki">
+
+<table>
+<tr>
+	<td>
+	<h1>Luettelointiohjelma</h1>
+	</td>
+	<td>
+
+  {% if session.username %}
+  <p>
+    Olet kirjautunut nimellä {{ session.username }}
+  </p>
+  <p>
+    <a href="/logout">Kirjaudu ulos</a>
+  </p>
+  {% else %}
+  <form action="/login" method="post">
+    <p>
+      Tunnus: <br />
+      <input type="text" name="username" />
+    </p>
+    <p>
+      Salasana: <br />
+      <input type="password" name="password" />
+    </p>
+    <input type="submit" value="Kirjaudu" />
+  </form>
+  <p>
+  Uusi käyttäjä? Luo tunnus <a href="{{ url_for('register') }}">täällä</a>
+  </p>
+  {% endif %}
+  </div>
+  	</td>
+  </tr>
+  </table>
+  <!--Yläpalkki loppuu-->
+  
+  <!--Pääpalkki alkaa-->
+  <div class="paapalkki">
+  {% if session.username %}
+  <p>
+  <h1>Tervetuloa sovellukseen</h1>
+  </p>
+  {% else %}
+  <p>
+  Kirjaudu sisään tai luo käyttäjätunnus
+  </p>
+  {% endif %}
+  </div>  
+</body>
+
+</html>
