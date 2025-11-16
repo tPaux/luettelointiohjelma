@@ -59,9 +59,12 @@
   <!--Pääpalkki alkaa-->
   <div class="paapalkki">
   {% if session.username %}
-  <p>
-  Uusimmat lisäykset luettelointiohjelmaan:
-  </p>
+  	<div class="paapalkkicontainertumma">
+  	<p class="ptummatausta"> Uusimmat lisäykset</p>
+  	</div>
+  	<div class="paapalkkicontainervaalea">
+  	
+  	</div>
   {% else %}
   <p class="keskella">
   <form action="/login" method="post" class="keskella"> 

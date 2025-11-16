@@ -7,6 +7,57 @@
 </head>
 
 <body>
+
+<!--Yläpalkki-->
+<div class="ylapalkki">
+
+<table>
+	<tr>
+		<td class="logoleveys">
+			<h1 class="headerotsikko">Luettelointi</h1>
+			<h1 class="headerotsikko">ohjelma</h1>
+		</td>
+		<td>
+			<table class="ylhaalla">
+				<tr>
+					<td class="ylhaallaoikealla">
+  						{% if session.username %}
+  	
+  							<p class="ptummatausta">
+    							Olet kirjautunut nimellä {{ session.username }}
+  							
+  							</p>
+  				
+  							<p class="ptummatausta">
+    							<a href="/logout">Kirjaudu ulos</a>
+  							</p>
+  						{% endif %}
+	
+  					</td>
+  				</tr>
+  				<tr>
+  					<td class="alhaalla">
+  					<p class="pleveateksti">
+  					ETUSIVU | OMAT SIVUT
+  					</p>
+  					</td>
+  				</tr>
+  			</table>
+  		</td>
+  	</tr>
+  </table>
+  </div>
+  <!--Yläpalkki loppuu-->
+  
+  <!--Vasen palkki alkaa-->
+  
+  <div class="vasenpalkki">
+  </div>
+  
+  <!-- Vasen palkki loppuu-->
+  
+  <!--Pääpalkki alkaa-->
+  <div class="paapalkki">
   <form action="/create" method="post" class="keskella">
     <p>
       Tunnus: <br />
@@ -22,6 +73,7 @@
     </p>
     <input type="submit" value="Luo tunnus" />
   </form>
+  </div>
 </body>
 
 </html>
