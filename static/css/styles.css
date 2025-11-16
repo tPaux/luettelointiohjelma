@@ -1,21 +1,20 @@
 body {
 	margin: 0 auto;
 	max-width: 50em;
-	line-height: 1.5;
+	line-height: 1,3;
 	padding: 4em 2em;
 	background-color: rgba(77, 77, 0, 0.1);
 	font-stretch: expanded;
+	
 }
 
 h1 {
 	
-	color: rgba(37, 37, 0, 0.6);
 	font-family: "Times New Roman";
-	font-size: 30px;
-	top: 10%;
+	font-weight: lighter;
+	font-size: 120px;
 	text-transform: lowercase;
-	line-height: 1.2;
-	letter-spacing: 15px;
+	letter-spacing: -12px;
 }
 
 
@@ -46,14 +45,56 @@ p {
 	letter-spacing: 2px; 
 }
 
-.p15 {
-	line-height: 1.5;
+.ptummatausta {
+	color: #F3F8FB;
+	font-size: 14px;
+	a:link, a:visited {
+		text-decoration: none; 
+		color: #E0E2DE;
+	}
 }
 
-.p2 {
-	line-height: 2;
+.pleveateksti {
+	letter-spacing: 10px;
+	color: #F3F8FB;
+	font-size: 16px;
+	a:link, a:visited {
+		text-decoration: none; 
+		color: #E0E2DE;
+	}
+	
+	a:hover, a:active {
+	color: #F7F9F6;
+	}
 }
 
+.headerotsikko {
+	color: #F4F4F4;
+	text-align: left;
+	text-shadow: 2px 2px #686868;
+	line-height: 0%;
+}
+
+.logoleveys {
+	width: 300px;
+}
+
+.ylhaalla {
+	vertical-align: top;
+}
+
+.keskella {
+	text-align: center;
+}
+
+.alhaalla {
+	vertical-align: bottom;
+}
+
+.ylhaallaoikealla {
+	vertical-align: top;
+	text-align: right;
+}
 
 a:link, a:visited {
 	text-decoration: none;
@@ -61,12 +102,19 @@ a:link, a:visited {
 }
 
 a:hover, a:active {
-	font-weight: bold;
+	color: #658EA2;
 }
 
 table {
 	width: 100%;
-	align-content: right;
+	height: 100%;
+	padding: 5px;
+	margin: 0px;
+	border: 0px dashed black;
+}
+
+td {
+	border: 0px dashed black;
 }
 
 .opaque {
@@ -77,32 +125,27 @@ table {
 	color: rgba(37, 37, 0, 0.15)
 }
 
-.keskella {
-	align-self: center;
-	position: absolute;
-}
-
 .ylapalkki {
-	width: 93%;
-	height: 200px;
+	width: 100%;
+	height: 230px;
+	padding: 10px;
+	margin: 0px;
 	top: 0px;
 	left: 0px;
-	text-align: right;
-	padding-right:7%;
 	position: absolute;
+	background-color: rgba(0, 0, 0, 0.6);
 	
 	
 }
 
-.yleistietopalkki {
-	width: 35%;
+.vasenpalkki {
+	width: 140px;
 	height: 120%;
+	padding: 10px;
+	margin: 0px;
 	top: 220px;
 	left: 0px;
-	padding-right: 5%;
-	padding-left: 10%;
-	text-align: right;
-	border-right: 3px dotted rgba(99, 37, 0, 0.6);
+	text-align: left;
 	position: absolute;
 	
 
@@ -111,14 +154,13 @@ table {
 .paapalkki {
 	width: 70%;
 	height: 100%;
-	left: 15%;
-	top: 220px;
 	padding: 40px;
+	margin: 0px;
+	border-radius: 100px;
+	left: 160px;
+	top: 220px;
 	text-align: left;
 	position: absolute;
-	background-color: rgba(250, 256, 256, 0.6);
-	border: 3px dotted rgba(37, 37, 0, 0.6);
-	border-radius: 100px;
 	
 }
 
