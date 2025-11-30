@@ -28,18 +28,18 @@ def show_list(list_id):
 def new_list():
     title = request.form["title"]
     content = request.form["content"]
-    user_id = session["user_id"]
+    username = session["username"]
 
-    list_id = lists.add_list(title, content, user_id)
+    list_id = lists.add_list(title, content, username)
     return redirect("/list/" + str(list_id))
 
 @app.route("/new_item", methods=["POST"])
 def new_item():
     content = request.form["content"]
-    user_id = session["user_id"]
+    username = session["username"]
     list_id = request.form["list_id"]
 
-    lists.add_item(content, user_id, list_id)
+    lists.add_item(content, username, list_id)
     return redirect("/list/" + str(list_id))
 
 @app.route("/edit/<int:item_id>", methods=["GET", "POST"])

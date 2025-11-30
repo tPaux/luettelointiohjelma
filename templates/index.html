@@ -38,8 +38,7 @@
   				<tr>
   					<td class="alhaalla">
   					<p class="pleveateksti">
-  					ETUSIVU | <a href="/lists">OMAT SIVUT</a> | <a href="/list">LIST</a>
-  					</p>
+  					ETUSIVU | <a href="/lists">OMAT SIVUT</a> 
   					</td>
   				</tr>
   			</table>
@@ -72,7 +71,7 @@
   <hr />
   {% endfor %}
 
-  {% if session.user_id %}
+  {% if session.username %}
   <h2>Uusi lista</h2>
 
   <form action="/new_list" method="post">
