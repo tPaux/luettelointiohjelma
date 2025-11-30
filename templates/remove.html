@@ -1,0 +1,21 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Artikkelin poisto</title>
+</head>
+
+<body>
+  <h1>Artikkelin poisto</h1>
+
+  <form action="/remove/{{ item.id }}" method="post">
+    <p>
+      Haluatko varmasti poistaa esineen?
+    </p>
+    <input type="submit" name="continue" value="Jatka" />
+    <input type="submit" name="cancel" value="Peruuta" />
+  </form>
+</body>
+
+</html>

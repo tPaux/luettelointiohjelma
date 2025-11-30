@@ -1,33 +1,87 @@
 import sqlite3
-from flask import Flask
-from flask import redirect, render_template, request
+from flask import Flask, redirect, render_template, request, session
 from werkzeug.security import generate_password_hash, check_password_hash
 import db
-from flask import Flask
-from flask import session
 import config
+import lists
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
 
-
 @app.route("/")
 def index():
-    return render_template("index.html")
+    my_lists = lists.get_lists()
+    return render_template("index.html", lists=my_lists)
 
-@app.route("/login", methods=["POST"])
+@app.route("/lists")
+def lists_view():  
+    my_lists = lists.get_lists()  
+    return render_template("lists.html", lists=my_lists)  
+
+@app.route("/list/<int:list_id>")
+def show_list(list_id):
+    list = lists.get_list(list_id)
+    items = lists.get_items(list_id)
+    return render_template("list.html", list=list, items=items)
+
+@app.route("/new_list", methods=["POST"])
+def new_list():
+    title = request.form["title"]
+    content = request.form["content"]
+    user_id = session["user_id"]
+
+    list_id = lists.add_list(title, content, user_id)
+    return redirect("/list/" + str(list_id))
+
+@app.route("/new_item", methods=["POST"])
+def new_item():
+    content = request.form["content"]
+    user_id = session["user_id"]
+    list_id = request.form["list_id"]
+
+    lists.add_item(content, user_id, list_id)
+    return redirect("/list/" + str(list_id))
+
+@app.route("/edit/<int:item_id>", methods=["GET", "POST"])
+def edit_item(item_id):
+    item = lists.get_item(item_id)
+
+    if request.method == "GET":
+        return render_template("edit.html", item=item)
+
+    if request.method == "POST":
+        content = request.form["content"]
+        lists.update_item(item["id"], content)
+        return redirect("/list/" + str(item["list_id"]))
+
+@app.route("/remove/<int:item_id>", methods=["GET", "POST"])
+def remove_item(item_id):
+    item = lists.get_item(item_id)
+
+    if request.method == "GET":
+        return render_template("remove.html", item=item)
+
+    if request.method == "POST":
+        if "continue" in request.form:
+            lists.remove_item(item["id"])
+        return redirect("/list/" + str(item["list_id"]))
+
+@app.route("/login", methods=["GET", "POST"])
 def login():
-    username = request.form["username"]
-    password = request.form["password"]
-    
-    sql = "SELECT password_hash FROM users WHERE username = ?"
-    password_hash = db.query(sql, [username])[0][0]
+    if request.method == "GET":
+        return render_template("login.html")
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
 
-    if check_password_hash(password_hash, password):
-        session["username"] = username
-        return redirect("/")
-    else:
-        return "VIRHE: väärä tunnus tai salasana"
+        sql = "SELECT password_hash FROM users WHERE username = ?"
+        password_hash = db.query(sql, [username])[0][0]
+
+        if check_password_hash(password_hash, password):
+            session["username"] = username
+            return redirect("/")
+        else:
+            return "VIRHE: väärä tunnus tai salasana"
 
 @app.route("/logout")
 def logout():
@@ -53,4 +107,4 @@ def create():
     except sqlite3.IntegrityError:
         return "VIRHE: tunnus on jo varattu"
 
-    return "Tunnus luotu"
+    return "tunnus luotu"

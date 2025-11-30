@@ -38,7 +38,7 @@
   				<tr>
   					<td class="alhaalla">
   					<p class="pleveateksti">
-  					ETUSIVU | <a href="/lists">OMAT SIVUT</a> | <a href="/list">LIST</a>
+  					ETUSIVU | OMAT SIVUT
   					</p>
   					</td>
   				</tr>
@@ -58,16 +58,12 @@
   
   <!--Pääpalkki alkaa-->
   <div class="paapalkki">
-  {% if session.username %}
-  	<div class="paapalkkicontainertumma">
-  	<p class="ptummatausta"> Uusimmat lisäykset</p>
-  	</div>
-  	<div class="paapalkkicontainervaalea">
-  	{% for list in lists %}
+  <hr />
+  {% for list in lists %}
   <p>
     <a href="/list/{{ list.id }}">{{ list.title }}</a>
     <br />
-    {{ list.total }} viestiä, uusin {{ list.last }}
+    {{ list.total }} artikkelia, uusin {{ list.last }}
   </p>
   <hr />
   {% endfor %}
@@ -86,25 +82,6 @@
     </p>
     <input type="submit" value="Lähetä" />
   </form>
-  {% endif %}
-  	</div>
-  {% else %}
-  <p class="keskella">
-  <form action="/login" method="post" class="keskella"> 
-    <p>
-      Tunnus: <br />
-      <input type="text" name="username" />
-    </p>
-    <p>
-      Salasana: <br />
-      <input type="password" name="password" />
-    </p>
-    <input type="submit" value="Kirjaudu" />
-  </form>
-  <p class="keskella">
-  Uusi käyttäjä? Luo tunnus <a href="{{ url_for('register') }}">täällä</a>
-  </p>
-  </p>
   {% endif %}
   </div>  
 </body>

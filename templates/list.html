@@ -38,7 +38,7 @@
   				<tr>
   					<td class="alhaalla">
   					<p class="pleveateksti">
-  					ETUSIVU | <a href="/lists">OMAT SIVUT</a> | <a href="/list">LIST</a>
+  					ETUSIVU | OMAT SIVUT
   					</p>
   					</td>
   				</tr>
@@ -58,54 +58,39 @@
   
   <!--Pääpalkki alkaa-->
   <div class="paapalkki">
-  {% if session.username %}
-  	<div class="paapalkkicontainertumma">
-  	<p class="ptummatausta"> Uusimmat lisäykset</p>
-  	</div>
-  	<div class="paapalkkicontainervaalea">
-  	{% for list in lists %}
+  <h1>{{ list.title }}</h1>
+
+  <hr />
+  {% for item in items %}
   <p>
-    <a href="/list/{{ list.id }}">{{ list.title }}</a>
-    <br />
-    {{ list.total }} viestiä, uusin {{ list.last }}
+    {{ item.username }} ({{ item.sent_at }}):
   </p>
+  <p>
+    {{ item.content }}
+  </p>
+  {% if item.user_id == session.user_id %}
+  <p>
+    <a href="/edit/{{ item.id }}">Muokkaa</a> |
+    <a href="/remove/{{ item.id }}">Poista</a>
+  </p>
+  {% endif %}
   <hr />
   {% endfor %}
 
   {% if session.user_id %}
-  <h2>Uusi lista</h2>
+  <h2>Uusi viesti</h2>
 
-  <form action="/new_list" method="post">
+  <form action="/new_item" method="post">
     <p>
-      Tyyppi:<br />
-      <input type="text" name="title" />
-    </p>
-    <p>
-      Artikkeli:<br />
+      Viesti:<br />
       <textarea name="content" rows="5" cols="40"></textarea>
     </p>
+    <input type="hidden" name="list_id" value="{{ list.id }}" />
     <input type="submit" value="Lähetä" />
   </form>
+  <hr />
   {% endif %}
-  	</div>
-  {% else %}
-  <p class="keskella">
-  <form action="/login" method="post" class="keskella"> 
-    <p>
-      Tunnus: <br />
-      <input type="text" name="username" />
-    </p>
-    <p>
-      Salasana: <br />
-      <input type="password" name="password" />
-    </p>
-    <input type="submit" value="Kirjaudu" />
-  </form>
-  <p class="keskella">
-  Uusi käyttäjä? Luo tunnus <a href="{{ url_for('register') }}">täällä</a>
-  </p>
-  </p>
-  {% endif %}
+
   </div>  
 </body>
 
