@@ -26,20 +26,26 @@ def show_list(list_id):
 
 @app.route("/new_list", methods=["POST"])
 def new_list():
-    title = request.form["title"]
+    type = request.form["type"]
     content = request.form["content"]
+    year = request.form["year"]
+    title = request.form["title"]
+    condition = request.form["condition"]
     username = session["username"]
 
-    list_id = lists.add_list(title, content, username)
+    list_id = lists.add_list(type, content, year, title, condition, username)
     return redirect("/list/" + str(list_id))
 
 @app.route("/new_item", methods=["POST"])
 def new_item():
     content = request.form["content"]
+    year = request.form["year"]
+    title = request.form["type"]
+    condition = request.form["condition"]
     username = session["username"]
     list_id = request.form["list_id"]
 
-    lists.add_item(content, username, list_id)
+    lists.add_item(content, username, list_id, year, title, condition)
     return redirect("/list/" + str(list_id))
 
 @app.route("/edit/<int:item_id>", methods=["GET", "POST"])
@@ -51,7 +57,10 @@ def edit_item(item_id):
 
     if request.method == "POST":
         content = request.form["content"]
-        lists.update_item(item["id"], content)
+        year = request.form["year"]
+        title = request.form["type"]
+        condition = request.form["condition"]
+        lists.update_item(item["id"], content, year, title, condition)
         return redirect("/list/" + str(item["list_id"]))
 
 @app.route("/remove/<int:item_id>", methods=["GET", "POST"])

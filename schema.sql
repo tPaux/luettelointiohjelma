@@ -6,13 +6,16 @@ CREATE TABLE users (
 
 CREATE TABLE lists (
     id INTEGER PRIMARY KEY,
-    title TEXT,
+    type TEXT,
     user_id INTEGER REFERENCES users
 );
 
 CREATE TABLE items (
     id INTEGER PRIMARY KEY,
     content TEXT,
+    year INTEGER,
+    title TEXT,
+    condition TEXT,
     sent_at TEXT,
     user_id INTEGER REFERENCES users,
     list_id INTEGER REFERENCES lists

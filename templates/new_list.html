@@ -78,14 +78,12 @@
   {% endfor %}
 
   {% if session.user_id %}
-  <h2>Uusi viesti</h2>
-
-  <form action="/new_item" method="post">
-    <p>
-      Viesti:<br />
-      <textarea name="content" rows="5" cols="40"></textarea>
-    </p>
-    <input type="hidden" name="list_id" value="{{ list.id }}" />
+  <form action="/new_list" method="post">
+    <p>Nimi:<br /><textarea name="title" rows="1" cols="40"></textarea></p>
+    <p>Vuosi:<br /><textarea name="year" rows="1" cols="40"></textarea></p>
+    <p>Tyyppi:<br /><textarea name="type" rows="1" cols="40"></textarea></p>
+    <p>Kunto:<br /><textarea name="condition" rows="1" cols="40"></textarea></p>
+    <p>Huomioita:<br /><textarea name="content" rows="4" cols="40"></textarea></p>
     <input type="submit" value="Lähetä" />
   </form>
   <hr />

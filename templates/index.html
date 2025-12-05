@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Kirjautuminen</title>
+  <title>Luetteloxi</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 
@@ -10,12 +10,12 @@
 
 <!--Yläpalkki-->
 <div class="ylapalkki">
+  <div class="ylapalkinsisalto">
 
 <table>
 	<tr>
-		<td class="logoleveys">
-			<h1 class="headerotsikko">Luettelointi</h1>
-			<h1 class="headerotsikko">ohjelma</h1>
+		<td>
+			<h1 class="headerotsikko">Luetteloxi</h1>
 		</td>
 		<td>
 			<table class="ylhaalla">
@@ -37,14 +37,14 @@
   				</tr>
   				<tr>
   					<td class="alhaalla">
-  					<p class="pleveateksti">
-  					ETUSIVU | <a href="/lists">OMAT SIVUT</a> 
+  				
   					</td>
   				</tr>
   			</table>
   		</td>
   	</tr>
   </table>
+  </div>
   </div>
   <!--Yläpalkki loppuu-->
   
@@ -57,7 +57,7 @@
   
   <!--Pääpalkki alkaa-->
   <div class="paapalkki">
-  {% if session.username %}
+    {% if session.username %}
   	<div class="paapalkkicontainertumma">
   	<p class="ptummatausta"> Uusimmat lisäykset</p>
   	</div>
@@ -70,23 +70,21 @@
   </p>
   <hr />
   {% endfor %}
-
-  {% if session.username %}
-  <h2>Uusi lista</h2>
-
-  <form action="/new_list" method="post">
-    <p>
-      Tyyppi:<br />
-      <input type="text" name="title" />
-    </p>
-    <p>
-      Artikkeli:<br />
-      <textarea name="content" rows="5" cols="40"></textarea>
-    </p>
-    <input type="submit" value="Lähetä" />
-  </form>
-  {% endif %}
-  	</div>
+  <table>
+        <tr>
+          <td>
+            {% if session.username %}
+              <form action="/new_list" method="post">
+                <p>Tyyppi:<br /><input type="text" name="type" rows="1" cols="80" /></p>
+                <p>Valmistaja/Esittäjä/Kirjailija/Suunnittelija:<br /><textarea name="creator" rows="1" cols="40"></textarea></p>
+                <p>Nimi:<br /><textarea name="title" rows="1" cols="40"></textarea></p>
+                <p>Valmistusvuosi:<br /><textarea name="year" rows="1" cols="40"></textarea></p>
+                <p>Kunto:<br /><textarea name="condition" rows="1" cols="40"></textarea></p>
+                <p>Huomioita:<br /><textarea name="content" rows="4" cols="40"></textarea></p>
+                <input type="submit" value="Lähetä" />
+              </form>
+            {% endif %}
+  	
   {% else %}
   <p class="keskella">
   <form action="/login" method="post" class="keskella"> 
@@ -105,6 +103,13 @@
   </p>
   </p>
   {% endif %}
+  </td>
+  <td>
+    Tähän tulee hakutoiminto
+  </td>
+  </tr>
+  </table>
+</div>
   </div>  
 </body>
 

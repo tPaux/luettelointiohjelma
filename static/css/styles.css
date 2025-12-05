@@ -3,7 +3,7 @@ body {
 	max-width: 50em;
 	line-height: 1,3;
 	padding: 4em 2em;
-	background-color: #ECE7F1;
+	background-color: #000000;
 	font-stretch: expanded;	
 }
 
@@ -14,6 +14,7 @@ h1 {
 	font-size: 120px;
 	text-transform: lowercase;
 	letter-spacing: -12px;
+	color:#a2d1c5;
 }
 
 
@@ -38,32 +39,32 @@ h3 {
 	
 
 p {
-	color: #395F5F;
+	color: #cbcbcb;
 	font-family: 'Helvetica', 'Arial', 'sans-serif';
 	font-size: 12px;
 	letter-spacing: 3px; 
 }
 
 .ptummatausta {
-	color: #F3F8FB;
+	color: #cbcbcb;
 	font-size: 14px;
 	a:link, a:visited {
 		text-decoration: none; 
-		color: #E0E2DE;
+		color: #a2d1c5;
 	}
 }
 
 .pleveateksti {
 	letter-spacing: 10px;
-	color: #F3F8FB;
+	color: #cbcbcb;
 	font-size: 16px;
 	a:link, a:visited {
 		text-decoration: none; 
-		color: #E0E2DE;
+		color: #a2d1c5;
 	}
 	
 	a:hover, a:active {
-	color: #F7F9F6;
+	color: #a2d1c5;
 	}
 }
 
@@ -92,15 +93,16 @@ p {
 .ylhaallaoikealla {
 	vertical-align: top;
 	text-align: right;
+	padding-right: 150px;
 }
 
 a:link, a:visited {
 	text-decoration: none;
-  	color: #506E7D;
+  	color: #a2d1c5;
 }
 
 a:hover, a:active {
-	color: #658EA2;
+	color: #a2d1c5;
 }
 
 table {
@@ -124,18 +126,18 @@ td {
 }
 
 .ylapalkki {
-	width: 100%;
-	height: 230px;
+	width: 88%;
+	height: 100px;
 	padding: 10px;
 	margin: 0px;
 	top: 0px;
-	left: 0px;
+	left: 10%;
 	position: absolute;
-	background-color: rgba(0, 0, 0, 0.9);
+	
 }
 
 .vasenpalkki {
-	width: 120px;
+	width: 5%;
 	height: auto;
 	padding: 10px;
 	margin: 0px;
@@ -146,30 +148,32 @@ td {
 }
 
 .paapalkki {
-	width: 800px;
+	width: 80%;
 	height: 100%;
-	padding: 40px;
-	margin: 0px;
+	padding: 10px;
+	margin: 10px;
 	border-radius: 100px;
-	left: 140px;
-	top: 220px;
+	left: 10%;
+	top: 150px;
 	text-align: left;
 	position: absolute;	
 }
 
 .paapalkkicontainertumma {
-	width: 100%;
-	background-color: rgba(0, 0, 0, 0.8);
+	width: 90%;
+	background-color: rgba(0, 255, 195, 0.889);
+	border-radius: 5px;
 	height: auto;
 	padding: 10px;
-	margin: 0px;
+	margin: 5px;
 }
 
 .paapalkkicontainervaalea {
-	width: 100%;
-	background-color: rgba(255, 255, 255, 0.6);
+	width: 90%;
+	background-color: rgba(200, 255, 240, 0.27);
+	border-radius: 5px;
 	height: auto;
 	padding: 10px;
-	margin: 0px;
+	margin: 5px;
 }
 
