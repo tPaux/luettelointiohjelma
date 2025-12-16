@@ -15,6 +15,7 @@ CREATE TABLE items (
     content TEXT,
     year INTEGER,
     title TEXT,
+    creator TEXT,
     condition TEXT,
     sent_at TEXT,
     user_id INTEGER REFERENCES users,

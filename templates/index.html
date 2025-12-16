@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Luetteloxi</title>
+  <title>luetteloxi</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 
@@ -15,7 +15,7 @@
 <table>
 	<tr>
 		<td>
-			<h1 class="headerotsikko">Luetteloxi</h1>
+			<img src="static/logo.jpg">
 		</td>
 		<td>
 			<table class="ylhaalla">
@@ -59,7 +59,7 @@
   <div class="paapalkki">
     {% if session.username %}
   	<div class="paapalkkicontainertumma">
-  	<p class="ptummatausta"> Uusimmat lisäykset</p>
+  	<p class="ptummatausta"> <h3>Lisää listoihin</h3></p>
   	</div>
   	<div class="paapalkkicontainervaalea">
   	{% for list in lists %}

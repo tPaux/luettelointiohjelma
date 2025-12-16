@@ -12,7 +12,7 @@ h1 {
 	font-family: "Times New Roman";
 	font-weight: lighter;
 	font-size: 120px;
-	text-transform: lowercase;
+	
 	letter-spacing: -12px;
 	color:#a2d1c5;
 }
@@ -32,9 +32,11 @@ h2 {
 h3 {
 	color: rgb(47, 37, 0);
 	font-family: "Times New Roman";
-	font-size: 16px;
+	font-size: 22px;
+	font-weight: 100;
 	text-transform: uppercase;
-	line-height: 3;
+	letter-spacing: 18px; 
+	padding-left: 10px;
 }
 	
 
@@ -69,7 +71,7 @@ p {
 }
 
 .headerotsikko {
-	color: #F4F4F4;
+	color: #ffc2c2;
 	text-align: left;
 	line-height: 0%;
 }
@@ -127,7 +129,7 @@ td {
 
 .ylapalkki {
 	width: 88%;
-	height: 100px;
+	height: 150px;
 	padding: 10px;
 	margin: 0px;
 	top: 0px;
@@ -154,23 +156,24 @@ td {
 	margin: 10px;
 	border-radius: 100px;
 	left: 10%;
-	top: 150px;
+	top: 200px;
 	text-align: left;
 	position: absolute;	
 }
 
 .paapalkkicontainertumma {
 	width: 90%;
-	background-color: rgba(0, 255, 195, 0.889);
+	background-color: rgba(255, 122, 149, 0.889);
 	border-radius: 5px;
-	height: auto;
+	padding-left: 10px; 
+	height: min-content;
 	padding: 10px;
 	margin: 5px;
 }
 
 .paapalkkicontainervaalea {
 	width: 90%;
-	background-color: rgba(200, 255, 240, 0.27);
+	background-color: rgba(255, 148, 184, 0.27);
 	border-radius: 5px;
 	height: auto;
 	padding: 10px;

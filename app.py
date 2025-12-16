@@ -31,9 +31,10 @@ def new_list():
     year = request.form["year"]
     title = request.form["title"]
     condition = request.form["condition"]
+    creator = request.form["creator"]
     username = session["username"]
 
-    list_id = lists.add_list(type, content, year, title, condition, username)
+    list_id = lists.add_list(type, content, year, title, condition, creator, username)
     return redirect("/list/" + str(list_id))
 
 @app.route("/new_item", methods=["POST"])
@@ -42,6 +43,7 @@ def new_item():
     year = request.form["year"]
     title = request.form["type"]
     condition = request.form["condition"]
+    creator = request.form["creator"]
     username = session["username"]
     list_id = request.form["list_id"]
 
@@ -60,6 +62,7 @@ def edit_item(item_id):
         year = request.form["year"]
         title = request.form["type"]
         condition = request.form["condition"]
+        creator = request.form["creator"]
         lists.update_item(item["id"], content, year, title, condition)
         return redirect("/list/" + str(item["list_id"]))
 

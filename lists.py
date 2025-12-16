@@ -13,31 +13,31 @@ def get_list(list_id):
     return db.query(sql, [list_id])[0]
 
 def get_items(list_id):
-    sql = """SELECT i.id, i.content, i.sent_at, i.user_id, u.username, i.year, i.title, i.condition
+    sql = """SELECT i.id, i.content, i.sent_at, i.user_id, u.username, i.year, i.title, i.condition, i.creator
              FROM items m, users u
              WHERE i.user_id = u.id AND i.list_id = ?
              ORDER BY i.id"""
     return db.query(sql, [list_id])
 
 def get_item(item_id):
-    sql = "SELECT id, content, year, type, condition, user_id, list_id FROM items WHERE id = ?"
+    sql = "SELECT id, content, year, type, condition, creator, user_id, list_id FROM items WHERE id = ?"
     return db.query(sql, [item_id])[0]
 
-def add_list(type, content, year, title, condition, username):
+def add_list(type, content, year, title, condition, creator, username):
     sql = "INSERT INTO lists (title, user_id) VALUES (?, ?)"
     db.execute(sql, [title, username])
     list_id = db.last_insert_id()
-    add_item(content, year, title, condition, username, list_id)
+    add_item(content, year, title, condition, creator, username, list_id)
     return list_id
 
-def add_item(content, year, title, condition, username, list_id):
-    sql = """INSERT INTO items (content, year, title, condition, sent_at, user_id, list_id) VALUES
+def add_item(content, year, title, condition, creator, username, list_id):
+    sql = """INSERT INTO items (content, year, title, condition, creator, sent_at, user_id, list_id) VALUES
              (?, datetime('now'), ?, ?)"""
-    db.execute(sql, [content, year, title, condition, username, list_id])
+    db.execute(sql, [content, year, title, condition, creator, username, list_id])
 
-def update_item(item_id, content, year, title, condition):
+def update_item(item_id, content, year, title, condition, creator):
     sql = "UPDATE items SET content = ? WHERE id = ?"
-    db.execute(sql, [content, year, title, condition, item_id])
+    db.execute(sql, [content, year, title, condition, creator, item_id])
 
 def remove_item(item_id):
     sql = "DELETE FROM items WHERE id = ?"
