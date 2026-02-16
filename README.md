@@ -11,7 +11,15 @@ Ohjelma erilaisten kokoelmien luetteloimiseen
 
 <h1>Sovelluksen asentaminen:</h1>
 
-Asenna flask -kirjasto
+Luo virtuaaliympäristö sovelluksen pyörittämiseen
+
+<code>python3 -m venv venv</code>
+
+Käynnistä virtuaaliympäristö komennolla
+
+<code>$ source venv/bin/activate</code>
+
+Asenna flask -kirjasto virtuaaliympäristössä
 
 <code>$ pip install flask</code>
 
