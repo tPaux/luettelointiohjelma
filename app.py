@@ -8,75 +8,6 @@ import lists
 app = Flask(__name__)
 app.secret_key = config.secret_key
 
-@app.route("/")
-def index():
-    my_lists = lists.get_lists()
-    return render_template("index.html", lists=my_lists)
-
-@app.route("/lists")
-def lists_view():  
-    my_lists = lists.get_lists()  
-    return render_template("lists.html", lists=my_lists)  
-
-@app.route("/list/<int:list_id>")
-def show_list(list_id):
-    list = lists.get_list(list_id)
-    items = lists.get_items(list_id)
-    return render_template("list.html", list=list, items=items)
-
-@app.route("/new_list", methods=["POST"])
-def new_list():
-    type = request.form["type"]
-    content = request.form["content"]
-    year = request.form["year"]
-    title = request.form["title"]
-    condition = request.form["condition"]
-    creator = request.form["creator"]
-    username = session["username"]
-
-    list_id = lists.add_list(type, content, year, title, condition, creator, username)
-    return redirect("/list/" + str(list_id))
-
-@app.route("/new_item", methods=["POST"])
-def new_item():
-    content = request.form["content"]
-    year = request.form["year"]
-    title = request.form["type"]
-    condition = request.form["condition"]
-    creator = request.form["creator"]
-    username = session["username"]
-    list_id = request.form["list_id"]
-
-    lists.add_item(content, username, list_id, year, title, condition)
-    return redirect("/list/" + str(list_id))
-
-@app.route("/edit/<int:item_id>", methods=["GET", "POST"])
-def edit_item(item_id):
-    item = lists.get_item(item_id)
-
-    if request.method == "GET":
-        return render_template("edit.html", item=item)
-
-    if request.method == "POST":
-        content = request.form["content"]
-        year = request.form["year"]
-        title = request.form["type"]
-        condition = request.form["condition"]
-        creator = request.form["creator"]
-        lists.update_item(item["id"], content, year, title, condition)
-        return redirect("/list/" + str(item["list_id"]))
-
-@app.route("/remove/<int:item_id>", methods=["GET", "POST"])
-def remove_item(item_id):
-    item = lists.get_item(item_id)
-
-    if request.method == "GET":
-        return render_template("remove.html", item=item)
-
-    if request.method == "POST":
-        if "continue" in request.form:
-            lists.remove_item(item["id"])
-        return redirect("/list/" + str(item["list_id"]))
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -86,12 +17,17 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
 
-        sql = "SELECT password_hash FROM users WHERE username = ?"
-        password_hash = db.query(sql, [username])[0][0]
+        sql = "SELECT id, password_hash FROM users WHERE username = ?"
+        row = db.query(sql, [username])[0]
+        user_id = row[0]
+        password_hash = row[1]
 
         if check_password_hash(password_hash, password):
             session["username"] = username
+            session["user_id"] = user_id
+
             return redirect("/")
+
         else:
             return "VIRHE: väärä tunnus tai salasana"
 
@@ -119,4 +55,36 @@ def create():
     except sqlite3.IntegrityError:
         return "VIRHE: tunnus on jo varattu"
 
-    return "tunnus luotu"
+    return redirect("/")
+
+@app.route("/")
+def index():
+    q = request.args.get("q", "")
+    items = lists.get_items(q)
+
+    return render_template("index.html", items=items)
+
+
+@app.route("/new_item", methods=["POST"])
+def new_item():
+    ttyype = request.form["ttyype"]
+    author = request.form["author"]
+    title = request.form["title"]
+    year = request.form["year"]
+    creator = request.form["creator"]
+    condition = request.form["condition"]
+    content = request.form["content"]
+    user_id = session["user_id"]
+
+    item_id = lists.add_item(ttyype, author, title, year, creator, condition, content, user_id)
+
+    return redirect("/item/" + str(item_id))
+
+@app.route("/item/<int:item_id>")
+def show_item(item_id):
+    item = lists.get_item(item_id)
+    return render_template("item.html", item=item)
+
+
+
+

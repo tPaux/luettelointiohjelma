@@ -5,22 +5,21 @@ body {
 	padding: 4em 2em;
 	background-color: #000000;
 	font-stretch: expanded;	
+	color: #FFFFFF;
 }
 
 h1 {
 	
-	font-family: "Times New Roman";
-	font-weight: lighter;
+	font-family: 'Courier', 'Courier New', 'monospace';
+	font-weight: bolder;
 	font-size: 120px;
 	
 	letter-spacing: -12px;
-	color:#a2d1c5;
+	color:#000000;
 }
-
-
 h2 {
-	color: #6396A9;
-	font-family: "Times New Roman";
+	color: #000000;
+	font-family: 'Courier', 'Courier New', 'monospace';
 	font-size: 30px;
 	text-transform: uppercase;
 	text-align: center;
@@ -30,153 +29,197 @@ h2 {
 	
 
 h3 {
-	color: rgb(47, 37, 0);
-	font-family: "Times New Roman";
-	font-size: 22px;
+	color: #FF07D7;
+	font-family: 'Courier', 'Courier New', 'monospace';
+	font-size: 24px;
 	font-weight: 100;
 	text-transform: uppercase;
-	letter-spacing: 18px; 
-	padding-left: 10px;
+	letter-spacing: 20px; 
+	font-weight: bolder;
 }
 	
 
 p {
-	color: #cbcbcb;
 	font-family: 'Helvetica', 'Arial', 'sans-serif';
-	font-size: 12px;
-	letter-spacing: 3px; 
+	font-weight: bold;
+	letter-spacing: 5px; 
+	line-height: 1.5;
+	color: #BCFF00;
 }
 
-.ptummatausta {
-	color: #cbcbcb;
-	font-size: 14px;
-	a:link, a:visited {
-		text-decoration: none; 
-		color: #a2d1c5;
-	}
+.pi {
+	font-family: 'Helvetica', 'Arial', 'sans-serif';
+	letter-spacing: 2px;
+	font-size: 12px;
+	color: #BCFF00;
+}
+
+.pvalkoinen {
+	color: #FFFFFF;
+	margin-right:10px;
+	margin-left: 10px;
+	vertical-align: text-top;
+	text-align: left;
+	font-size: 12px;
 }
 
 .pleveateksti {
 	letter-spacing: 10px;
-	color: #cbcbcb;
+	color: #000000;
 	font-size: 16px;
-	a:link, a:visited {
-		text-decoration: none; 
-		color: #a2d1c5;
-	}
-	
-	a:hover, a:active {
-	color: #a2d1c5;
-	}
 }
 
-.headerotsikko {
-	color: #ffc2c2;
+.table {
+	width: 690px;
+	background-color: #000000;
+}
+
+.td {
+	vertical-align: text-top;
 	text-align: left;
-	line-height: 0%;
+	font-size: 12px;
+	width: 27%;
+
 }
 
-.logoleveys {
-	width: 300px;
-}
-
-.ylhaalla {
-	vertical-align: top;
-}
-
-.keskella {
-	text-align: center;
-}
-
-.alhaalla {
-	vertical-align: bottom;
-}
-
-.ylhaallaoikealla {
-	vertical-align: top;
+.tdright {
+	vertical-align: text-top;
 	text-align: right;
-	padding-right: 150px;
+	font-size: 12px;
+	width: 27%;
 }
 
+.tdl {
+	width: 5%;
+}
+
+.tdwide {
+	text-align: left;
+	font-size: 12px;
+	width: 90%;
+}
+
+.vl {
+  border-left: 5px solid magenta;
+  border-radius: 5px;
+  padding: 10px;
+  height: 35px;
+  align-self: center;
+}
+
+.hl {
+	border-bottom: 3px solid magenta;
+	border-radius: 1px;
+	width: 95%;
+	align-self: center;
+}
+
+.inputlogin {
+	width: 200px;
+}
+
+.sendform {
+	width: 600px;
+}
+
+.textbox {
+	width: 600px;
+	height: 100px;
+}
+
+.button {
+  background-color: magenta;
+  border: none;
+  color: black;
+  font-family: 'monospace';
+  font-size: 10px;
+  padding: 10px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  
+  cursor: pointer;
+}
 a:link, a:visited {
 	text-decoration: none;
-  	color: #a2d1c5;
+  	color: #E207FF;
 }
-
 a:hover, a:active {
-	color: #a2d1c5;
+	color: #E207FF;
 }
-
-table {
-	width: 100%;
-	height: 100%;
-	padding: 5px;
-	margin: 0px;
-	border: 0px dashed black;
-}
-
-td {
-	border: 0px dashed black;
-}
-
-.opaque {
-	color: rgba(37, 37, 0, 0.3)
-}
-
-.opaque2 {
-	color: rgba(37, 37, 0, 0.15)
-}
-
 .ylapalkki {
-	width: 88%;
-	height: 150px;
+	width: 850px;
+	height: 250px;
 	padding: 10px;
 	margin: 0px;
 	top: 0px;
-	left: 10%;
+	left: 120px;
 	position: absolute;
-	
+	align-items: center;
 }
 
-.vasenpalkki {
-	width: 5%;
-	height: auto;
-	padding: 10px;
-	margin: 0px;
-	top: 220px;
-	left: 0px;
-	text-align: left;
-	position: absolute;
+.leftline {
+	top: 30px;
+	left: 70px;
+	border-left: 5px solid #00FFA1;
+  	border-radius: 5px;
+  	padding: 10px;
+  	height: 200%; 
+  	position: absolute;
+}
+
+.rightline {
+	top: 30px;
+	left: 930px;
+	border-left: 5px solid #00FFA1;
+  	border-radius: 5px;
+  	padding: 10px;
+  	height: 200%;
+  	position: absolute;
+  	
 }
 
 .paapalkki {
-	width: 80%;
+	width: 780px;
 	height: 100%;
 	padding: 10px;
 	margin: 10px;
 	border-radius: 100px;
-	left: 10%;
-	top: 200px;
+	left: 100px;
+	top: 370px;
 	text-align: left;
 	position: absolute;	
 }
 
-.paapalkkicontainertumma {
-	width: 90%;
-	background-color: rgba(255, 122, 149, 0.889);
+.paapalkkiheader {
+	width: 700px;
+	background-color: #FF07D7;
+	border: solid 5px #FF07D7;
 	border-radius: 5px;
-	padding-left: 10px; 
-	height: min-content;
-	padding: 10px;
-	margin: 5px;
+	padding: 0px;
+	margin: 0px;
+	
 }
 
-.paapalkkicontainervaalea {
-	width: 90%;
-	background-color: rgba(255, 148, 184, 0.27);
+.headerinnerborder {
+	width: 653px;
+	background-color: #000000;
+	border: solid 5px #000000;
+	border-radius: 5px;
+	margin: 3px;
+	padding-left: 15px; 
+	padding-right: 15px;
+	text-align: left;
+}
+
+.paapalkkicontainer {
+	width: 700px;
+	background-color: #000000;
+	border: 5px solid #12F404;
 	border-radius: 5px;
 	height: auto;
-	padding: 10px;
-	margin: 5px;
+	padding: 20px;
+	margin: 20px;
 }
 

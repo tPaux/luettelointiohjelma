@@ -7,12 +7,15 @@ def get_connection():
     con.row_factory = sqlite3.Row
     return con
 
-def execute(sql, params=[]):
-    con = get_connection()
-    result = con.execute(sql, params)
+def execute(sql, params):
+    con = sqlite3.connect("database.db")
+    con.row_factory = sqlite3.Row
+    cur = con.cursor()
+    cur.execute(sql, params)
     con.commit()
-    g.last_insert_id = result.lastrowid
+    last_id = cur.lastrowid
     con.close()
+    return last_id
 
 def last_insert_id():
     return g.last_insert_id    

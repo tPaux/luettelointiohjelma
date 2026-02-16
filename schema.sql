@@ -4,20 +4,16 @@ CREATE TABLE users (
     password_hash TEXT
 );
 
-CREATE TABLE lists (
-    id INTEGER PRIMARY KEY,
-    type TEXT,
-    user_id INTEGER REFERENCES users
-);
-
 CREATE TABLE items (
-    id INTEGER PRIMARY KEY,
+    item_id INTEGER PRIMARY KEY,
+    ttyype TEXT,
     content TEXT,
     year INTEGER,
     title TEXT,
     creator TEXT,
+    author TEXT,
     condition TEXT,
     sent_at TEXT,
-    user_id INTEGER REFERENCES users,
-    list_id INTEGER REFERENCES lists
+    user_id INTEGER REFERENCES users
+
 );

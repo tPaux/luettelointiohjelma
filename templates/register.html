@@ -2,78 +2,61 @@
 <html>
 
 <head>
-  <title>Rekisteröinti</title>
+  <title>LuetteloX</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 
 <body>
 
-<!--Yläpalkki-->
-<div class="ylapalkki">
+<!--Yläpalkki alkaa-->
+	<div class="ylapalkki">
+		<p>
+			<img src="/static/logo.jpg" alt="LuetteloX" align="center">
+		</p>
+	</div>
+			
+<!--Yläpalkki loppuu-->
 
-<table>
-	<tr>
-		<td class="logoleveys">
-			<h1 class="headerotsikko">Luettelointi</h1>
-			<h1 class="headerotsikko">ohjelma</h1>
-		</td>
-		<td>
-			<table class="ylhaalla">
-				<tr>
-					<td class="ylhaallaoikealla">
-  						{% if session.username %}
-  	
-  							<p class="ptummatausta">
-    							Olet kirjautunut nimellä {{ session.username }}
-  							
-  							</p>
-  				
-  							<p class="ptummatausta">
-    							<a href="/logout">Kirjaudu ulos</a>
-  							</p>
-  						{% endif %}
-	
-  					</td>
-  				</tr>
-  				<tr>
-  					<td class="alhaalla">
-  					<p class="pleveateksti">
-  					ETUSIVU | OMAT SIVUT
-  					</p>
-  					</td>
-  				</tr>
-  			</table>
-  		</td>
-  	</tr>
-  </table>
-  </div>
-  <!--Yläpalkki loppuu-->
-  
-  <!--Vasen palkki alkaa-->
-  
-  <div class="vasenpalkki">
-  </div>
-  
-  <!-- Vasen palkki loppuu-->
-  
-  <!--Pääpalkki alkaa-->
-  <div class="paapalkki">
-  <form action="/create" method="post" class="keskella">
-    <p>
-      Tunnus: <br />
-      <input type="text" name="username" />
-    </p>
-    <p>
-      Salasana: <br />
-      <input type="password" name="password1" />
-    </p>
-    <p>
-      Salasana uudestaan: <br />
-      <input type="password" name="password2" />
-    </p>
-    <input type="submit" value="Luo tunnus" />
-  </form>
-  </div>
+
+<!--Pääpalkki alkaa-->
+	<div class="paapalkki">
+		<div class="paapalkkiheader">
+			<div class="headerinnerborder">
+				<p>
+					<h3>luo tunnus</h3>		
+				</p>
+			</div>
+		</div>
+		<div class="paapalkkicontainer">
+			<p>
+				<form action="/create" method="post" >
+    				<p>
+      				Tunnus: <br />
+      				<input type="text" name="username" class="inputlogin"/>
+    				</p>
+    				<p>
+      				Salasana: <br />
+      				<input type="password" name="password1" class="inputlogin" />
+    				</p>
+    				<p>
+      				Salasana uudestaan: <br />
+      				<input type="password" name="password2" class="inputlogin" />
+    				</p>
+    					<input type="submit" value="Luo tunnus" class="button" />
+  				</form>
+			</p>
+		</div>	
+	</div>
+		
+<!--Pääpalkki loppuu-->
+
+<!--Vasen ja oikea pystyviiva-->
+	<div class="leftline"></div>
+	<div class="rightline"></div>-
+<!--Pystyviivat loppuu-->
+
 </body>
 
 </html>
+
+  

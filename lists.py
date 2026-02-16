@@ -1,44 +1,68 @@
 import db
 
-def get_lists():
-    sql = """SELECT l.id, l.type, COUNT(i.id) AS total, MAX(i.sent_at) AS last
-            FROM lists l
-            LEFT JOIN items i ON l.id = i.list_id  
-            GROUP BY l.id
-            ORDER BY l.id DESC"""
-    return db.query(sql)
+def get_items(q=""):
+    base_sql = """
+        SELECT DISTINCT
+            i.item_id,
+            u.username,
+            i.ttyype,
+            i.author,
+            i.title,
+            i.creator,
+            i.year,
+            i.condition,
+            i.content,
+            i.sent_at
+        FROM items i
+        JOIN users u ON i.user_id = u.id
+    """
 
-def get_list(list_id):
-    sql = "SELECT id, type FROM lists WHERE id = ?"
-    return db.query(sql, [list_id])[0]
+    if q:
+        sql = base_sql + """
+            WHERE i.ttyype LIKE ?
+               OR i.author LIKE ?
+               OR i.title LIKE ?
+               OR i.creator LIKE ?
+               OR i.year LIKE ?
+               OR i.condition LIKE ?
+               OR i.content LIKE ?
+        """
+        pattern = f"%{q}%"
+        params = [pattern] * 7
+        return db.query(sql, params)
 
-def get_items(list_id):
-    sql = """SELECT i.id, i.content, i.sent_at, i.user_id, u.username, i.year, i.title, i.condition, i.creator
-             FROM items m, users u
-             WHERE i.user_id = u.id AND i.list_id = ?
-             ORDER BY i.id"""
-    return db.query(sql, [list_id])
+    return db.query(base_sql)
+
+
+
+def add_item(ttyype, author, title, year, creator, condition, content, user_id):
+    sql = """INSERT INTO items
+             (ttyype, author, title, year, creator, condition, content, user_id)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?)"""
+    return db.execute(sql, [ttyype, author, title, year, creator, condition, content, user_id])
+
 
 def get_item(item_id):
-    sql = "SELECT id, content, year, type, condition, creator, user_id, list_id FROM items WHERE id = ?"
-    return db.query(sql, [item_id])[0]
+    sql = """
+    SELECT u.id,
+           i.item_id,
+           i.ttyype,
+           i.author,
+           i.title,
+           i.year,
+           i.creator,
+           i.condition,
+           i.content,
+           u.username,
+           i.sent_at,
+           i.user_id
+    FROM items i
+    JOIN users u ON i.user_id = u.id
+    WHERE i.item_id = ?
+    """
+    rows = db.query(sql, [item_id])
+    if not rows:
+        return None  # tai nosta virhe, tai näytä 404
+    return rows[0]
 
-def add_list(type, content, year, title, condition, creator, username):
-    sql = "INSERT INTO lists (title, user_id) VALUES (?, ?)"
-    db.execute(sql, [title, username])
-    list_id = db.last_insert_id()
-    add_item(content, year, title, condition, creator, username, list_id)
-    return list_id
 
-def add_item(content, year, title, condition, creator, username, list_id):
-    sql = """INSERT INTO items (content, year, title, condition, creator, sent_at, user_id, list_id) VALUES
-             (?, datetime('now'), ?, ?)"""
-    db.execute(sql, [content, year, title, condition, creator, username, list_id])
-
-def update_item(item_id, content, year, title, condition, creator):
-    sql = "UPDATE items SET content = ? WHERE id = ?"
-    db.execute(sql, [content, year, title, condition, creator, item_id])
-
-def remove_item(item_id):
-    sql = "DELETE FROM items WHERE id = ?"
-    db.execute(sql, [item_id])
