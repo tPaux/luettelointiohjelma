@@ -13,7 +13,7 @@ Ohjelma erilaisten kokoelmien luetteloimiseen
 
 Luo virtuaaliympäristö sovelluksen pyörittämiseen
 
-<code>$python3 -m venv venv</code>
+<code>$ python3 -m venv venv</code>
 
 Käynnistä virtuaaliympäristö komennolla
 
