@@ -3,9 +3,9 @@ body {
 	max-width: 50em;
 	line-height: 1,3;
 	padding: 4em 2em;
-	background-color: #222222;
+	background-color: #000000;
 	font-stretch: expanded;	
-	color: #CCCCCC;
+	color: #D2FFBB;
 }
 
 h1 {
@@ -17,7 +17,6 @@ h1 {
 	letter-spacing: -12px;
 	color:#000000;
 }
-
 h2 {
 	color: #000000;
 	font-family: 'Courier', 'Courier New', 'monospace';
@@ -30,12 +29,11 @@ h2 {
 	
 
 h3 {
-	color: #909090;
+	color: #FF07D7;
 	font-family: 'Courier', 'Courier New', 'monospace';
 	font-size: 24px;
 	font-weight: 100;
 	text-transform: uppercase;
-	text-indent: 20px;
 	letter-spacing: 20px; 
 	font-weight: bolder;
 }
@@ -46,7 +44,14 @@ p {
 	font-weight: bold;
 	letter-spacing: 5px; 
 	line-height: 1.5;
-	color: #FFFFFF;
+	color: #D2FFBB;
+}
+
+.pi {
+	font-family: 'Helvetica', 'Arial', 'sans-serif';
+	letter-spacing: 2px;
+	font-size: 14px;
+	color: #D2FFBB;
 }
 
 .pvalkoinen {
@@ -65,10 +70,8 @@ p {
 }
 
 .table {
-	width: 100%;
-	text-align: left;
-	margin: 0px;
-	padding: 0px;
+	width: 690px;
+	background-color: #011A00;
 }
 
 .td {
@@ -76,21 +79,7 @@ p {
 	text-align: left;
 	font-size: 14px;
 	width: 27%;
-	background-color: #000000;
-	font-family: 'Helvetica', 'Arial', 'sans-serif';
-}
 
-.th {
-	vertical-align: text-top;
-	text-align: left;
-	letter-spacing: 3px;
-	width: 27%;
-	background-color: #FFFFFF;
-	color: #000000;
-	font-family: 'Helvetica', 'Arial', 'sans-serif';
-	font-size: 14px;
-	text-transform: uppercase;
-	font-weight: bold;
 }
 
 .tdright {
@@ -107,7 +96,7 @@ p {
 .tdwide {
 	text-align: left;
 	font-size: 14px;
-	letter-spacing: 5px;
+	letter-spacing: 3px;
 	width: 90%;
 }
 
@@ -119,6 +108,12 @@ p {
   align-self: center;
 }
 
+.hl {
+	border-bottom: 3px solid magenta;
+	border-radius: 1px;
+	width: 95%;
+	align-self: center;
+}
 
 .inputlogin {
 	width: 200px;
@@ -134,7 +129,7 @@ p {
 }
 
 .button {
-  background-color: white;
+  background-color: magenta;
   border: none;
   color: black;
   font-family: 'monospace';
@@ -149,41 +144,41 @@ p {
 }
 a:link, a:visited {
 	text-decoration: none;
-  	color: #777777;
+  	color: #E207FF;
 }
 a:hover, a:active {
-	color: #777777;
+	color: #E207FF;
 }
-
-.linkit {
-	top: 0px;
-	left: 50px;
-	position: absolute;
-}
-
-.hakukentta {
-	top: 40px;
-	left: 50px;
-	position: absolute;
-}
-
-.logo {
-	top: 50px;
-	left: 50px;
-	position: absolute;
-	font-family: 'Courier', 'monospace';
-	font-size: 120px;
-}
-
-.kirjautuminen {
+.ylapalkki {
 	width: 830px;
-	height: 400px;
+	height: 250px;
 	padding: 10px;
 	margin: 0px;
-	top: 270px;
-	left: 50px;
+	top: 0px;
+	left: 100px;
 	position: absolute;
 	align-items: center;
+}
+
+.leftline {
+	top: 30px;
+	left: 70px;
+	border-left: 5px solid #00FFA1;
+  	border-radius: 5px;
+  	padding: 10px;
+  	height: 200%; 
+  	position: absolute;
+}
+
+.rightline {
+	top: 30px;
+	left: 910px;
+	border-left: 5px solid #00FFA1;
+  	border-radius: 5px;
+  	padding: 10px;
+  	height: 200%;
+  	position: absolute;
+  	
 }
 
 .paapalkki {
@@ -192,30 +187,40 @@ a:hover, a:active {
 	padding: 10px;
 	margin: 10px;
 	border-radius: 100px;
-	left: 50px;
-	top: 400px;
+	left: 80px;
+	top: 370px;
 	text-align: left;
 	position: absolute;	
 }
 
 .paapalkkiheader {
-	width: 100%;
-	background-color: #FFFFFF;
-	border: solid 5px #FFFFFF;
+	width: 680px;
+	background-color: #FF07D7;
+	border: solid 5px #FF07D7;
 	border-radius: 5px;
 	padding: 0px;
-	margin: 10px;
+	margin: 0px;
 	
 }
 
+.headerinnerborder {
+	width: 633px;
+	background-color: #130011;
+	border: solid 5px #130011;
+	border-radius: 5px;
+	margin: 3px;
+	padding-left: 15px; 
+	padding-right: 15px;
+	text-align: left;
+}
 
 .paapalkkicontainer {
-	width: 100%;
-	background-color: #000000;
-	border: 5px solid #000000;
+	width: 680px;
+	background-color: #011A00;
+	border: 5px solid #12F404;
 	border-radius: 5px;
 	height: auto;
-	padding: 0px;
-	margin: 10px;
+	padding: 20px;
+	margin: 20px;
 }
 

@@ -79,53 +79,6 @@
 <!--Pääpalkki alkaa-->
 <div class="paapalkki">
 
-<!--5 viimeisintä esinettä-->
-	<div class="paapalkkiheader">
-		<div class="headerinnerborder">
-			<h3>viisi viimeisintä</h3>
-
-		</div>
-	</div>
-
-	<div class="paapalkkicontainer">
-
-    {% for item in items[-5:] %}
-        <div>
-            <p><strong>Omistaja: {{ item[1] }}</strong></p>
-            <table class="table">
-                <tr>
-                    <th class="pi">Esittäjä/Kirjailija/Muotoilija</th>
-                    <th class="pi">Nimi</th>
-                    <th class="pi">Vuosi</th>
-                    <th class="pi">Tyyppi</th>
-                    <th class="pi">Julkaisija</th>
-                    <th class="pi">Kunto</th>
-                </tr>
-                <tr>
-                    <td class="pi">{{ item[3] }}</td>
-                    <td class="pi">{{ item[4] }}</td>
-                    <td class="pi">{{ item[6] }}</td>
-                    <td class="pi">{{ item[2] }}</td>
-                    <td class="pi">{{ item[5] }}</td>
-                    <td class="pi">{{ item[7] }}</td>
-                </tr>
-            </table>
-            <p>Kommentti: {{ item[8] }}</p>
-
-            {% if item.user_id == session.user_id %}
-                <p>
-                    <a href="/edit/{{ item.id }}">Muokkaa</a> |
-                    <a href="/remove/{{ item.id }}">Poista</a>
-                </p>
-            {% endif %}
-            <hr />
-        </div>
-    {% endfor %}
-
-</div>
-
-
-
 	{% if session.username %}
 
    <!-- Hakukentän otsikko -->
@@ -185,54 +138,19 @@
    	<div class="paapalkkiheader">
       	<div class="headerinnerborder">
          	<h3>lisää luetteloon</h3>
-         </div>
-      </div>
+        </div>
+    </div>
 
     <!-- Lisää luetteloon -lomake -->
-      <div class="paapalkkicontainer">
-      	<table class="table">
-         	<tr>
-            	<td>
-               	<form action="/new_item" method="post">
-                  	<p>Tyyppi:<br>
-                     	<select name="ttyype" class="sendform">
-                        	<option value="Kirja">Kirja</option>
-                           <option value="Äänilevy">Äänilevy</option>
-                           <option value="Elokuva">Elokuva</option>
-                           <option value="Esine">Esine</option>
-                        </select>
-                     </p>
-
-                     <p>Julkaisija/Kustantaja/Valmistaja:<br>
-                     	<input type="text" name="creator" class="sendform">
-                     </p>
-
-                     <p>Esittäjä/Kirjailija/Suunnittelija:<br>
-                     	<input type="text" name="author" class="sendform">
-                    	</p>
-
-                     <p>Nimi:<br>
-                     	<input type="text" name="title" class="sendform">
-                     </p>
-
-                    	<p>Valmistusvuosi:<br>
-                     	<input type="text" name="year" class="sendform">
-                     </p>
-
-                     <p>Kunto:<br>
-                     	<input type="text" name="condition" class="sendform">
-                     </p>
-
-                    	<p>Huomioita:<br>
-                     	<textarea name="content" rows="10" cols="73"></textarea>
-                     </p>
-
-                     <input type="submit" class="button" value="Lähetä">
-                	</form>
-            	</td>
-        		</tr>
-       	</table>
-     	</div>
+    <div class="paapalkkicontainer">
+      	<form action="/edit/{{ item.id }}" method="post">
+            <p>
+            Viesti:<br />
+            <textarea name="content" rows="5" cols="40">{{ message.content }}</textarea>
+            </p>
+            <input type="submit" value="Lähetä" />
+        </form>
+    </div>
 	{% endif %}
 
 

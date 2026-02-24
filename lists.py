@@ -65,4 +65,8 @@ def get_item(item_id):
         return None  # tai nosta virhe, tai näytä 404
     return rows[0]
 
+def update_item(item_id, content):
+    sql="UPDATE items SET content = ? WHERE id = ?"
+    db.execute(sql, [content, item_id])
+
 

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>LuetteloX</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body>
+
+<!--Yläpalkki alkaa-->
+	<div class="ylapalkki">
+		<p>
+			<img src="/static/logo.jpg" alt="LuetteloX" align="center">
+		</p>
+	</div>
+			
+<!--Yläpalkki loppuu-->
+
+
+<!--Pääpalkki alkaa-->
+	<div class="paapalkki">
+		<div class="paapalkkiheader">
+			<div class="headerinnerborder">
+				<p>
+					<h3>luo tunnus</h3>		
+				</p>
+			</div>
+		</div>
+		<div class="paapalkkicontainer">
+			<p>
+				<form action="/create" method="post" >
+    				<p>
+      				Tunnus: <br />
+      				<input type="text" name="username" class="inputlogin"/>
+    				</p>
+    				<p>
+      				Salasana: <br />
+      				<input type="password" name="password1" class="inputlogin" />
+    				</p>
+    				<p>
+      				Salasana uudestaan: <br />
+      				<input type="password" name="password2" class="inputlogin" />
+    				</p>
+    					<input type="submit" value="Luo tunnus" class="button" />
+  				</form>
+			</p>
+			{% if sqlite3.IntegrityError %}
+			<p>VIRHE: Tunnus on jo varattu</p>
+			{% else %}
+			<p>Tunnus luotu. Palaa etusivulle <a href="/">tästä</a></p>
+			{% endif %}
+		
+		</div>	
+	</div>
+		
+<!--Pääpalkki loppuu-->
+
+<!--Vasen ja oikea pystyviiva-->
+	<div class="leftline"></div>
+	<div class="rightline"></div>-
+<!--Pystyviivat loppuu-->
+
+</body>
+
+</html>
+
+  

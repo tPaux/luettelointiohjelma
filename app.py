@@ -85,6 +85,16 @@ def show_item(item_id):
     item = lists.get_item(item_id)
     return render_template("item.html", item=item)
 
+#@app.route("/edit/<int:message_id>", methods=["GET", "POST"])
+#def edit_item(item_id):
+#    item = lists.get_item(item_id)
+#
+#    if request.method == "GET":
+#        return render_template("edit.html", item=item)
+#    if request.method == "POST":
+#        content = request.form[TÄHÄN KAIKKI KOHDAT VIESTISTÄ]
+#        lists.update_item(item["id"], content)
+#        return redirect("/item/ + str(item[item_id)")
 
 
 

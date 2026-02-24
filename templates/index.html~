@@ -12,15 +12,15 @@
 	<div class="ylapalkki">
 		<table class="table">
 			<tr>
-				<td class="td"><a href="/">etusivu</a></td>
-				<td class="td"><a href="/own">oma sivu</a></td>
-				<td class="td"></td>
-			</tr>
+				<td class="td"><a href="index.html">etusivu</a></td>
+				<td class="td"><a href="own">oma sivu</a></td>
+				<td class="td"></td>			
+			</tr>		
 		</table>
 		<p>
 			<img src="/static/logo.jpg" alt="LuetteloX" align="center">
 		</p>
-
+		
 			{% if session.username %}
 			<div class="paapalkkicontainer">
 				<table class="table">
@@ -29,7 +29,7 @@
 							<br />
 							<p>
 								Olet kirjautunut nimellä {{ session.username}}
-
+						
 								<a href="/logout">Kirjaudu ulos</a>
 							</p>
 							<br />
@@ -42,15 +42,15 @@
 			<table class="table">
 				<tr>
 					<td class="tdl">
-
+									
 					</td>
 					<td class="td">
 					<p>
-						Uusi käyttäjä? Luo tunnus <a href="{{ url_for('register') }}">täällä</a>
+						Uusi käyttäjä? Luo tunnus <a href="{{ url_for('register') }}">täällä</a>	
 					</p>
 					</td>
 					<td class="tdl">
-
+									
 					</td>
 					<td class="tdright">
 						<form action="/login" method="post">
@@ -65,9 +65,9 @@
     						<p>
         						<input type="submit" class="button" value="Kirjaudu">
     						</p>
-						</form>
+						</form>		
 					</td>
-					<td class="tdl"></td>
+					<td class="tdl"></td>	
 				</tr>
 			</table>
 			</div>
@@ -78,53 +78,6 @@
 
 <!--Pääpalkki alkaa-->
 <div class="paapalkki">
-
-<!--5 viimeisintä esinettä-->
-	<div class="paapalkkiheader">
-		<div class="headerinnerborder">
-			<h3>viisi viimeisintä</h3>
-
-		</div>
-	</div>
-
-	<div class="paapalkkicontainer">
-
-    {% for item in items[-5:] %}
-        <div>
-            <p><strong>Omistaja: {{ item[1] }}</strong></p>
-            <table class="table">
-                <tr>
-                    <th class="pi">Esittäjä/Kirjailija/Muotoilija</th>
-                    <th class="pi">Nimi</th>
-                    <th class="pi">Vuosi</th>
-                    <th class="pi">Tyyppi</th>
-                    <th class="pi">Julkaisija</th>
-                    <th class="pi">Kunto</th>
-                </tr>
-                <tr>
-                    <td class="pi">{{ item[3] }}</td>
-                    <td class="pi">{{ item[4] }}</td>
-                    <td class="pi">{{ item[6] }}</td>
-                    <td class="pi">{{ item[2] }}</td>
-                    <td class="pi">{{ item[5] }}</td>
-                    <td class="pi">{{ item[7] }}</td>
-                </tr>
-            </table>
-            <p>Kommentti: {{ item[8] }}</p>
-
-            {% if item.user_id == session.user_id %}
-                <p>
-                    <a href="/edit/{{ item.id }}">Muokkaa</a> |
-                    <a href="/remove/{{ item.id }}">Poista</a>
-                </p>
-            {% endif %}
-            <hr />
-        </div>
-    {% endfor %}
-
-</div>
-
-
 
 	{% if session.username %}
 
@@ -144,7 +97,7 @@
       </form>
       <!-- Hakutulokset-->
    	{% if request.args.get('q') and items %}
-
+  
 			<div class="hakutulokset">
          	{% for item in items %}
             	<div>
@@ -166,8 +119,8 @@
 								<td class="pi">{{ item[5] }}</td>   <!-- creator -->
 								<td class="pi">{{ item[7] }}</td>   <!-- condition -->
 							</tr>
-						</table>
-						<p>Kommentti: {{ item[8] }}</p>
+						</table>  
+						<p>Kommentti: {{ item[8] }}</p>    	
                  	</div>
          	{% endfor %}
          </div>
@@ -179,7 +132,7 @@
 
    </div>
 
-
+    
 	{% if session.username %}
 	<!-- Lisää luetteloon -otsikko -->
    	<div class="paapalkkiheader">
