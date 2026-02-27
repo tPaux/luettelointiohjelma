@@ -3,19 +3,21 @@
 <html>
 
 <head>
-  <title>Artikkelin poisto</title>
+  <title>Esineen poisto</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 
 <body>
-  <h1>Artikkelin poisto</h1>
+  <h1>Esineen poisto</h1>
 
-  <form action="/remove/{{ item.id }}" method="post">
+  <form action="/remove/{{ item['item_id'] }}" method="post">
     <p>
       Haluatko varmasti poistaa esineen?
     </p>
     <input type="submit" name="continue" value="Jatka" />
     <input type="submit" name="cancel" value="Peruuta" />
   </form>
+
 </body>
 
 </html>

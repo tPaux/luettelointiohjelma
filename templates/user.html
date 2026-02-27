@@ -75,34 +75,23 @@
 </div>
 
 <!-- Käyttäjä -->
-<div class="kayttaja">
-	{% if session.username %}
-		<p class="outsetv">
-			{{ session.username}} &nbsp;
-		</p>
-	{% endif %}
-	{% if error %}
-		<div class="error-box">
-			<p class="error">
-				{{ error }} &nbsp;
-			</p>
-		</div>
-	{% endif %}
-</div>
+<table class="kayttaja">
+    <tr>
+        <td class="td">
+        <h4>Käyttäjä {{ user.username }}</h4>
+        </td>
+        <td class="td">
+        </td>
+        <td class="td">
+            {% if session.username %}
+                <p class="outsetv">
+                    {{ session.username}} &nbsp;
+                </p>
+            {% endif %}
+        </td>
+    </tr>
+</table>
 
-<!-- Hakukenttä -->
-<div class="hakukentta">
-	<form action="/search" method="get">
-		{% if q %}
-		<input type="text" name="q" class="sendform" value="{{ q }}" />
-		&nbsp;
-		{% else %}
-		<input type="text" name="q" class="sendform" />
-		&nbsp;
-		{% endif %}
-		<input type="submit" value="Hae" class="button">
-	</form>
-</div>
 <div class="linkit">
 	<table class="table">
 		<tr>
@@ -142,9 +131,36 @@
 	<h2>luettelointiohjelma</h2>
 	<div class="vaakaviiva">
 	</div>
+	<!-- Käyttäjän kuva -->
+	{% if user.has_image %}
+        <a href="/add_image"><img src="/image/{{ user.id }}" /></a>
+    {% else %}
+        <a href="/add_image">Lisää kuva</a>
+    {% endif %}
+    <!-- Käyttäjän esineet tietokannassa -->
 
-<!-- Hakutulokset-->
-   	{% if q and items %}
+    {% if session.username == user.username %}
+    <p>
+        Sinulla on {{ items | count }} esinettä tietokannassa
+    </p>
+    {% else %}
+    <p>
+        Käyttäjällä {{ user.username }} on {{ items | count }} esinettä tietokannassa
+    </p>
+    {% endif %}
+
+    {% if items %}
+    <p>
+        Ensimmäinen esine lisätty {{ items[-1].sent_at }}
+    </p>
+    <p>
+        Viimeisin esine lisätty {{ items[0].sent_at }}
+    </p>
+    {% endif %}
+
+    <!-- Hakutulokset-->
+
+    {% if q and items %}
 
 		<div class="hakutulokset">
          	{% for item in items %}
@@ -179,32 +195,18 @@
 							<td class="tditems">{{ item['content'] }}</td>
 						</tr>
 						<tr>
-							<th class="th">Omistaja</th>
-							<td class="tditems">{{ item['username'] }}</td>
-						</tr>
-						<tr>
                             <th class="th">Lisätty</th>
                             <td class="tditems">{{ item['sent_at']}}</td>
 						</tr>
 						<tr>
 							<th class="th"></th>
 							<td class="tditems">
-								{% if session.get("user_id") and item[10] == session["user_id"] %}
+								{% if session.get("user_id") and item['user_id'] == session["user_id"] %}
 									<p>
 										<a href="/edit/{{ item[0] }}">Muokkaa</a> |
 										<a href="/remove/{{ item[0] }}">Poista</a>
 									</p>
 								{% endif %}
-							</td>
-						</tr>
-						<tr>
-							<th></th>
-							<td>
-							<p>
-								<a href="/{{ page - 1 }}">&lt;&lt;</a>
-								Sivu {{ page }}/{{ page_count }}
-								<a href="/{{ page + 1 }}">&gt;&gt;</a>
-							</p>
 							</td>
 						</tr>
 					</table>
@@ -217,79 +219,6 @@
      	{% else %}
      		<p></p>
 		{% endif %}
-
-
-<!--3 viimeisintä esinettä-->
-	<div class="paapalkkiheader">
-
-		<h3>kolme viimeisintä</h3>
-
-	</div>
-
-	<div class="paapalkkicontainer">
-
-    {% for item in items[-3:] %}
-        <div>
-            <table class="table">
-                <tr>
-                    <th class="th"">Tekijä</th>
-                    <td class="tditems">{{ item['author'] }}</td>
-				</tr>
-				<tr>
-                    <th class="th">Nimi</th>
-                    <td class="tditems">{{ item['title'] }}</td>
-				</tr>
-				<tr>
-                    <th class="th">Vuosi</th>
-                    <td class="tditems">{{ item['year'] }}</td>
-				</tr>
-				<tr>
-                    <th class="th">Tyyppi</th>
-                    <td class="tditems">{{ item['ttyype'] }}</td>
-				</tr>
-				<tr>
-                    <th class="th">Julkaisija</th>
-                    <td class="tditems">{{ item['creator'] }}</td>
-				</tr>
-				<tr>
-                    <th class="th">Kunto</th>
-                    <td class="tditems">{{ item['condition'] }}</td>
-                </tr>
-                <tr>
-					<th class="th">Esineen kuvaus</th>
-					<td class="tditems">{{ item['content'] }}</td>
-                </tr>
-                <tr>
-					<th class="th">Omistaja</th>
-					<td class="tditems"><a href="/user/{{ item.user_id }}">
-					{{ item.username }}</a>
-					</td>
-                </tr>
-                <tr>
-                            <th class="th">Lisätty</th>
-                            <td class="tditems">{{ item['sent_at']}}</td>
-				</tr>
-                <tr>
-					<th class="th"></th>
-					<td class="tditems">
-						{% if session.get("user_id") and item['user_id'] == session["user_id"] %}
-							<p>
-								<a href="/edit/{{ item[0] }}">Muokkaa</a> |
-								<a href="/remove/{{ item[0] }}">Poista</a>
-							</p>
-						{% endif %}
-					</td>
-                </tr>
-            </table>
-
-
-            <hr />
-        </div>
-    {% endfor %}
-    </div>
-    <div class="vaakaviiva">
-	</div>
-
 
 	{% if session.username %}
 	<!-- Lisää luetteloon -otsikko -->
@@ -344,6 +273,7 @@
                     	<p>Esineen kuvaus:*<br>
                      	<textarea name="content" rows="10" cols="73" minlength="10" maxlength="1000" required></textarea>
                      </p>
+					<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
 					<p class="mini">Kuvaile esinettä mahdollisimman tarkasti 10-1000 sanalla</p>
 					<p class="mini">* Merkityt kohdat ovat pakollisia</p>
                      <input type="submit" class="button" value="Lähetä">

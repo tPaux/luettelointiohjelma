@@ -1,8 +1,10 @@
 CREATE TABLE users (
     id INTEGER PRIMARY KEY,
     username TEXT UNIQUE,
-    password_hash TEXT
+    password_hash TEXT,
+    image BLOB
 );
+
 
 CREATE TABLE items (
     item_id INTEGER PRIMARY KEY,
@@ -14,6 +16,11 @@ CREATE TABLE items (
     author TEXT,
     condition TEXT,
     sent_at TEXT,
-    user_id INTEGER REFERENCES users
+    user_id INTEGER REFERENCES users,
+    image BLOB
 
 );
+
+CREATE INDEX idx_items ON items (item_id);
+
+/
