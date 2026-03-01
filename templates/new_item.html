@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ item.title }}</title>
+    <title>new item</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 
@@ -157,67 +157,72 @@
 	<h2>luettelointiohjelma</h2>
 		<div class="vaakaviiva"></div>
 
-		<div class="paapalkkiheader">
-			<div class="headerinnerborder">
-				<p>
-					<h3> {{ item.title }}</h3>
-				</p>
-			</div>
+<div>
+{% if session.username %}
+	<!-- Lisää luetteloon -otsikko -->
+   	<div class="paapalkkiheader">
+		<h3>lisää luetteloon</h3>
+	</div>
+    <!-- Lisää luetteloon -lomake -->
+      <div class="paapalkkicontainer">
+      	<table class="table">
+			<tr>
+            	<td>
+               	<form action="/new_item" method="post">
+                  	<p>Tyyppi:*<br>
+                     	<select name="ttyype" class="sendform" required>
+							<option value="" disabled selected hidden>(Valitse)</option>
+							<option value="Kirja">Kirja</option>
+							<option value="Äänilevy">Äänilevy</option>
+							<option value="Elokuva">Elokuva</option>
+							<option value="Esine">Esine</option>
+                        </select>
+                     </p>
+
+                     <p>Valmistaja tai kustantaja:<br>
+                     	<input type="text" name="creator" maxlength="50" class="sendform">
+                     </p>
+
+                     <p>Tekijä:*<br>
+                     	<input type="text" name="author" minlength="2" maxlength="50" class="sendform" required>
+                    	</p>
+
+                     <p>Nimi:*<br>
+                     	<input type="text" name="title" minlength="2" maxlength="50" class="sendform" required>
+                     </p>
+
+                    	<p>Valmistusvuosi:<br>
+                     	<input type="text" name="year" maxlength="8" class="sendform">
+                     </p>
+
+                     <p>Kunto:*<br>
+                     	<select name="condition" class="sendform" required>
+							<option value="" disabled selected hidden>(Valitse)</option>
+							<option value="Erinomainen">Erinomainen</option>
+							<option value="Hyvä">Hyvä</option>
+							<option value="Tyydyttävä">Tyydyttävä</option>
+							<option value="Välttävä">Välttävä</option>
+                        </select>
+                     </p>
+
+                    	<p>Esineen kuvaus:*<br>
+                     	<textarea name="content" rows="10" cols="73" minlength="10" maxlength="1000" required></textarea>
+                     </p>
+					<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+					<p class="mini">Kuvaile esinettä mahdollisimman tarkasti 10-1000 sanalla</p>
+					<p class="mini">* Merkityt kohdat ovat pakollisia</p>
+                     <input type="submit" class="button" value="Lähetä">
+                	</form>
+
+
+            	</td>
+        		</tr>
+       	</table>
+     	</div>
 		</div>
-	<div class="paapalkkicontainer">
+	{% endif %}
+</div>
 
-    <table class="table">
-        <tr>
-            <th class="th">Tekijä</th>
-            <td class="tditems">{{ item.author }}</td>
-        </tr>
-        <tr>
-            <th class="th">Nimi</th>
-            <td class="tditems">{{ item.title }}</td>
-        </tr>
-        <tr>
-            <th class="th">Vuosi</th>
-            <td class="tditems">{{ item.year }}</td>
-        </tr>
-        <tr>
-            <th class="th">Tyyppi</th>
-            <td class="tditems">{{ item.ttyype }}</td>
-        </tr>
-        <tr>
-            <th class="th">Julkaisija</th>
-            <td class="tditems">{{ item.creator }}</td>
-        </tr>
-        <tr>
-            <th class="th">Kunto</th>
-            <td class="tditems">{{ item.condition }}</td>
-        </tr>
-        <tr>
-            <th class="th">Kuvaus</th>
-			<td class="tditems">{{ item.content | show_lines }}
-			</td>
-        </tr>
-        <tr>
-            <th class="th">Lisätty</th>
-            <td class="tditems">{{ item.sent_at }}</td>
-        </tr>
-        <tr>
-			<th></th>
-			<td class="tditems">
-			 {% if session.get("user_id") and item['user_id'] == session["user_id"] %}
-				<p>
-					<a href="/edit/{{ item['item_id'] }}">Muokkaa</a> |
-					<a href="/remove/{{ item['item_id'] }}">Poista</a>
-				</p>
-			{% endif %}
-			</td>
-        </tr>
-    </table>
-
-
-    <div class="vaakaviiva"></div>
-
-    <p><a href="/new_item">← Lisää toinen esine</a></p>
-    </div>
 </div>
 
 </body>

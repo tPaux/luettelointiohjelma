@@ -128,6 +128,12 @@ def search(page=1):
     return render_template("index.html", items=items, page=page, page_count=page_count, q=q)
 
 
+@app.route("/new_item", methods=["GET"])
+def new_item_form():
+    require_login()
+    items = lists.get_items(1, 10)
+    return render_template("new_item.html", items=items)
+
 @app.route("/new_item", methods=["POST"])
 def new_item():
     require_login()

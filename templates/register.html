@@ -7,16 +7,6 @@
 </head>
 
 <body>
-{% if filled is not defined %}
-    {% set filled = {} %}
-{% endif %}
-{% if error is not defined %}
-    {% set error = None %}
-{% endif %}
-{% if next_page is not defined %}
-    {% set next_page = "/" %}
-{% endif %}
-
 
 <!-- Kirjautumispalkki -->
 <div id="login" class="popup">
@@ -94,6 +84,14 @@
 				<p class="outset">&nbsp; <a href="/user/{{ session.user_id }}"> oma sivu</a>
 				</p>
 			</td>
+
+
+			<td class="td">
+			<p class="outset"> &nbsp;
+				<a href="/new_item">lisää esine</a>
+			</p>
+			</td>
+
 			<td class="td">
 					<p class="outset">&nbsp; <a href="/logout">kirjaudu ulos</a>
 					</p>
@@ -137,10 +135,10 @@
 					<p class="outset"> &nbsp; <span id="register">rekisteröidy</span>
 					</p>
 					<br>
-					<form action="/create" method="post" autocomplete="off">
+					<form action="/create" method="post">
 					<p>
 						Tunnus: <br />
-						<input type="text" name="username" class="inputlogin" value="{{ filled.username }}" maxlength="16" />
+						<input type="text" name="username" class="inputlogin" maxlength="16" />
 					</p>
 					<p>
 						Salasana: <br />

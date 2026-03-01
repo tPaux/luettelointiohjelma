@@ -85,76 +85,6 @@
 	</table>
 </div>
 
-<div class="bigpopup" id="add">
-{% if session.username %}
-	<!-- Lisää luetteloon -otsikko -->
-   	<div class="paapalkkiheader">
-		<h3>lisää luetteloon</h3>
-	</div>
-    <!-- Lisää luetteloon -lomake -->
-      <div class="paapalkkicontainer">
-      	<table class="table">
-         	<tr>
-				<td class="tdright">
-					<a href="#" class="close">sulje</a>
-				</td>
-			</tr>
-			<tr>
-            	<td>
-               	<form action="/new_item" method="post">
-                  	<p>Tyyppi:*<br>
-                     	<select name="ttyype" class="sendform" required>
-							<option value="" disabled selected hidden>(Valitse)</option>
-							<option value="Kirja">Kirja</option>
-							<option value="Äänilevy">Äänilevy</option>
-							<option value="Elokuva">Elokuva</option>
-							<option value="Esine">Esine</option>
-                        </select>
-                     </p>
-
-                     <p>Valmistaja tai kustantaja:<br>
-                     	<input type="text" name="creator" maxlength="50" class="sendform">
-                     </p>
-
-                     <p>Tekijä:*<br>
-                     	<input type="text" name="author" minlength="2" maxlength="50" class="sendform" required>
-                    	</p>
-
-                     <p>Nimi:*<br>
-                     	<input type="text" name="title" minlength="2" maxlength="50" class="sendform" required>
-                     </p>
-
-                    	<p>Valmistusvuosi:<br>
-                     	<input type="text" name="year" maxlength="8" class="sendform">
-                     </p>
-
-                     <p>Kunto:*<br>
-                     	<select name="condition" class="sendform" required>
-							<option value="" disabled selected hidden>(Valitse)</option>
-							<option value="Erinomainen">Erinomainen</option>
-							<option value="Hyvä">Hyvä</option>
-							<option value="Tyydyttävä">Tyydyttävä</option>
-							<option value="Välttävä">Välttävä</option>
-                        </select>
-                     </p>
-
-                    	<p>Esineen kuvaus:*<br>
-                     	<textarea name="content" rows="10" cols="73" minlength="10" maxlength="1000" required></textarea>
-                     </p>
-					<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-					<p class="mini">Kuvaile esinettä mahdollisimman tarkasti 10-1000 sanalla</p>
-					<p class="mini">* Merkityt kohdat ovat pakollisia</p>
-                     <input type="submit" class="button" value="Lähetä">
-                	</form>
-
-
-            	</td>
-        		</tr>
-       	</table>
-     	</div>
-		</div>
-	{% endif %}
-</div>
 
 <!-- Käyttäjä -->
 <div class="kayttaja">
@@ -194,13 +124,12 @@
 				</p>
 			</td>
 
-			{% if session.username == user.username %}
+
 			<td class="td">
 			<p class="outset"> &nbsp;
-				<a href="#add">Lisää esine</a>
+				<a href="/new_item">lisää esine</a>
 			</p>
 			</td>
-			{% endif %}
 
 			<td class="td">
 					<p class="outset">&nbsp; <a href="/logout">kirjaudu ulos</a>
