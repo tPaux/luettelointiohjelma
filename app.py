@@ -152,7 +152,7 @@ def new_item():
     if not user:
         abort(404)
 
-    if not ttyype or not author or not title or not condition or len(author) > 50 or len(author) < 2 or len(title) > 50 or len(title) < 2 or len(year) > 8 or len(year) < 1 or len(creator) > 50 or len(content) > 1000 or len(content) < 10 or not condition:
+    if not ttyype or not author or not title or not condition or len(author) > 50 or len(author) < 2 or len(title) > 50 or len(title) < 2 or len(year) > 20 or len(year) < 1 or len(creator) > 50 or len(content) > 1000 or len(content) < 10 or not condition:
         abort(403)
 
     try:
