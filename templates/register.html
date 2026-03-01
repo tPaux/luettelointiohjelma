@@ -2,24 +2,127 @@
 <html>
 
 <head>
-  <title>LuetteloX</title>
+  <title>Luettelointiohjelma</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 
 <body>
+{% if filled is not defined %}
+    {% set filled = {} %}
+{% endif %}
+{% if error is not defined %}
+    {% set error = None %}
+{% endif %}
+{% if next_page is not defined %}
+    {% set next_page = "/" %}
+{% endif %}
 
-<!--Yläpalkki alkaa-->
-	<div class="ylapalkki">
-		<p>
-			<img src="/static/logo.jpg" alt="LuetteloX" align="center">
+
+<!-- Kirjautumispalkki -->
+<div id="login" class="popup">
+  <table class="table">
+    <tr>
+      <td class="tdright">
+        <a href="#" class="close">sulje</a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p class="outset">&nbsp; kirjautuminen</p>
+        <br>
+
+        <form action="/login" method="post">
+          <p>
+            Tunnus:<br>
+            <input type="text" name="username" class="inputlogin">
+          </p>
+          <p>
+            Salasana:<br>
+            <input type="password" name="password" class="inputlogin">
+          </p>
+          <p>
+            <input type="submit" class="button" value="Kirjaudu">
+          </p>
+			{% if next_page %}
+				<input type="hidden" name="next_page" value="{{ next_page }}" />
+			{% else %}
+				<input type="hidden" name="next_page" value="/" />
+			{% endif %}
+        </form>
+
+      </td>
+	</tr>
+  </table>
+</div>
+
+
+
+<!-- Käyttäjä -->
+<div class="kayttaja">
+	{% if session.username %}
+		<p class="outsetv">
+			{{ session.username}} &nbsp;
+		</p>
+	{% endif %}
+	{% if error %}
+		<div class="error-box">
+			<p class="error">
+				{{ error }} &nbsp;
+			</p>
+		</div>
+	{% endif %}
+	{% for message in get_flashed_messages() %}
+	<div class="error-box">
+		<p class="error">
+		{{ message }} &nbsp;
 		</p>
 	</div>
-			
-<!--Yläpalkki loppuu-->
+  {% endfor %}
+</div>
+
+<!-- Linkit -->
+
+<div class="linkit">
+	<table class="table">
+		<tr>
+			<td class="td">
+				<p class="outset">&nbsp; <a href="/"> etusivu</a>
+				</p>
+			</td>
+				{% if session.username %}
+			<td class="td">
+				<p class="outset">&nbsp; <a href="/user/{{ session.user_id }}"> oma sivu</a>
+				</p>
+			</td>
+			<td class="td">
+					<p class="outset">&nbsp; <a href="/logout">kirjaudu ulos</a>
+					</p>
+			</td>
+			<td>
+			</td>
+				{% else %}
+			<td class="td">
+					<p class="outset">&nbsp; <a href="/#login">kirjaudu</a>
+					</p>
+			</td>
+			<td class="td">
+					<p class="outset">&nbsp; <a href="/#register">rekisteröidy</a>
+					</p>
+			</td>
+
+				{% endif %}
+			</td>
+		</tr>
+	</table>
+</div>
+
 
 
 <!--Pääpalkki alkaa-->
 	<div class="paapalkki">
+		<h2>luettelointiohjelma</h2>
+		<div class="vaakaviiva"></div>
+
 		<div class="paapalkkiheader">
 			<div class="headerinnerborder">
 				<p>
@@ -28,32 +131,40 @@
 			</div>
 		</div>
 		<div class="paapalkkicontainer">
-			<p>
-				<form action="/create" method="post" >
-    				<p>
-      				Tunnus: <br />
-      				<input type="text" name="username" class="inputlogin"/>
-    				</p>
-    				<p>
-      				Salasana: <br />
-      				<input type="password" name="password1" class="inputlogin" />
-    				</p>
-    				<p>
-      				Salasana uudestaan: <br />
-      				<input type="password" name="password2" class="inputlogin" />
-    				</p>
-    					<input type="submit" value="Luo tunnus" class="button" />
-  				</form>
-			</p>
+		<table>
+			<tr>
+				<td class="td">
+					<p class="outset"> &nbsp; <span id="register">rekisteröidy</span>
+					</p>
+					<br>
+					<form action="/create" method="post" autocomplete="off">
+					<p>
+						Tunnus: <br />
+						<input type="text" name="username" class="inputlogin" value="{{ filled.username }}" maxlength="16" />
+					</p>
+					<p>
+						Salasana: <br />
+						<input type="password" name="password1" class="inputlogin" />
+					</p>
+					<p>
+						Salasana uudestaan: <br />
+						<input type="password" name="password2" class="inputlogin" />
+					</p>
+					<input type="submit" value="Luo tunnus" class="button" />
+					{% if next_page %}
+						<input type="hidden" name="next_page" value="{{ next_page }}" />
+					{% else %}
+						<input type="hidden" name="next_page" value="/" />
+					{% endif %}
+					</form>
+				</td>
+			</tr>
+		</table>
 		</div>	
 	</div>
 		
 <!--Pääpalkki loppuu-->
 
-<!--Vasen ja oikea pystyviiva-->
-	<div class="leftline"></div>
-	<div class="rightline"></div>-
-<!--Pystyviivat loppuu-->
 
 </body>
 

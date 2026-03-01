@@ -21,6 +21,9 @@ CREATE TABLE items (
 
 );
 
-CREATE INDEX idx_items ON items (item_id);
+CREATE INDEX IF NOT EXISTS idx_items_user_id ON items(user_id);
+CREATE INDEX IF NOT EXISTS idx_items_item_id ON items(item_id);
+
+
 
 /

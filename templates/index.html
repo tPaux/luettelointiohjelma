@@ -33,6 +33,11 @@
           <p>
             <input type="submit" class="button" value="Kirjaudu">
           </p>
+			{% if next_page %}
+				<input type="hidden" name="next_page" value="{{ next_page }}" />
+			{% else %}
+				<input type="hidden" name="next_page" value="/" />
+			{% endif %}
         </form>
 
       </td>
@@ -68,6 +73,12 @@
 						<input type="password" name="password2" class="inputlogin" />
 					</p>
 						<input type="submit" value="Luo tunnus" class="button" />
+
+						{% if next_page %}
+							<input type="hidden" name="next_page" value="{{ next_page }}" />
+						{% else %}
+							<input type="hidden" name="next_page" value="/" />
+						{% endif %}
 				</form>
 			</td>
 		</tr>
@@ -88,6 +99,13 @@
 			</p>
 		</div>
 	{% endif %}
+	{% for message in get_flashed_messages() %}
+	<div class="error-box">
+		<p class="error">
+		{{ message }} &nbsp;
+		</p>
+	</div>
+  {% endfor %}
 </div>
 
 <!-- Hakukenttä -->
@@ -103,6 +121,9 @@
 		<input type="submit" value="Hae" class="button">
 	</form>
 </div>
+
+<!-- Linkit -->
+
 <div class="linkit">
 	<table class="table">
 		<tr>
@@ -110,11 +131,11 @@
 				<p class="outset">&nbsp; <a href="/"> etusivu</a>
 				</p>
 			</td>
+				{% if session.username %}
 			<td class="td">
 				<p class="outset">&nbsp; <a href="/user/{{ session.user_id }}"> oma sivu</a>
 				</p>
 			</td>
-				{% if session.username %}
 			<td class="td">
 					<p class="outset">&nbsp; <a href="/logout">kirjaudu ulos</a>
 					</p>
@@ -175,12 +196,13 @@
 							<td class="tditems">{{ item['condition'] }}</td>
 						</tr>
 						<tr>
-							<th class="th">Kommentti</th>
-							<td class="tditems">{{ item['content'] }}</td>
+							<th class="th">Kuvaus</th>
+							<td class="tditems">{{ item.content | show_lines }}
+						</td>
 						</tr>
 						<tr>
 							<th class="th">Omistaja</th>
-							<td class="tditems">{{ item['username'] }}</td>
+							<td class="tditems"><a href="/user/{{ item.user_id }}">{{ item.username }}</a></td>
 						</tr>
 						<tr>
                             <th class="th">Lisätty</th>
@@ -197,39 +219,41 @@
 								{% endif %}
 							</td>
 						</tr>
-						<tr>
-							<th></th>
-							<td>
-							<p>
-								<a href="/{{ page - 1 }}">&lt;&lt;</a>
-								Sivu {{ page }}/{{ page_count }}
-								<a href="/{{ page + 1 }}">&gt;&gt;</a>
-							</p>
-							</td>
-						</tr>
 					</table>
 				<hr />
 				</div>
          	{% endfor %}
+         	<table>
+				<tr>
+					<th></th>
+					<td>
+						<p>
+							<a href="/{{ page - 1 }}">&lt;&lt;</a>
+							Sivu {{ page }}/{{ page_count }}
+							<a href="/{{ page + 1 }}">&gt;&gt;</a>
+						</p>
+					</td>
+				</tr>
+			</table>
          </div>
          <div class="vaakaviiva">
 		</div>
-     	{% else %}
-     		<p></p>
-		{% endif %}
+	{% else %}
+
 
 
 <!--3 viimeisintä esinettä-->
-	<div class="paapalkkiheader">
 
-		<h3>kolme viimeisintä</h3>
+		<div class="paapalkkiheader">
 
-	</div>
+			<h3>kolme viimeisintä</h3>
 
-	<div class="paapalkkicontainer">
+		</div>
 
-    {% for item in items[-3:] %}
-        <div>
+		<div class="paapalkkicontainer">
+
+		{% for item in items[-3:] %}
+			<div>
             <table class="table">
                 <tr>
                     <th class="th"">Tekijä</th>
@@ -256,8 +280,9 @@
                     <td class="tditems">{{ item['condition'] }}</td>
                 </tr>
                 <tr>
-					<th class="th">Esineen kuvaus</th>
-					<td class="tditems">{{ item['content'] }}</td>
+					<th class="th">Kuvaus</th>
+					<td class="tditems">{{ item.content | show_lines }}
+					</td>
                 </tr>
                 <tr>
 					<th class="th">Omistaja</th>
@@ -266,8 +291,8 @@
 					</td>
                 </tr>
                 <tr>
-                            <th class="th">Lisätty</th>
-                            <td class="tditems">{{ item['sent_at']}}</td>
+					<th class="th">Lisätty</th>
+					<td class="tditems">{{ item['sent_at']}}</td>
 				</tr>
                 <tr>
 					<th class="th"></th>
@@ -289,75 +314,7 @@
     </div>
     <div class="vaakaviiva">
 	</div>
-
-    
-	{% if session.username %}
-	<!-- Lisää luetteloon -otsikko -->
-   	<div class="paapalkkiheader">
-
-		<h3>lisää luetteloon</h3>
-
-	</div>
-
-    <!-- Lisää luetteloon -lomake -->
-      <div class="paapalkkicontainer">
-      	<table class="table">
-         	<tr>
-            	<td>
-               	<form action="/new_item" method="post">
-                  	<p>Tyyppi:*<br>
-                     	<select name="ttyype" class="sendform" required>
-							<option value="" disabled selected hidden>(Valitse)</option>
-							<option value="Kirja">Kirja</option>
-							<option value="Äänilevy">Äänilevy</option>
-							<option value="Elokuva">Elokuva</option>
-							<option value="Esine">Esine</option>
-                        </select>
-                     </p>
-
-                     <p>Valmistaja tai kustantaja:<br>
-                     	<input type="text" name="creator" maxlength="50" class="sendform">
-                     </p>
-
-                     <p>Tekijä:*<br>
-                     	<input type="text" name="author" minlength="2" maxlength="50" class="sendform" required>
-                    	</p>
-
-                     <p>Nimi:*<br>
-                     	<input type="text" name="title" minlength="2" maxlength="50" class="sendform" required>
-                     </p>
-
-                    	<p>Valmistusvuosi:<br>
-                     	<input type="text" name="year" maxlength="8" class="sendform">
-                     </p>
-
-                     <p>Kunto:*<br>
-                     	<select name="condition" class="sendform" required>
-							<option value="" disabled selected hidden>(Valitse)</option>
-							<option value="Kirja">Erinomainen</option>
-							<option value="Äänilevy">Hyvä</option>
-							<option value="Elokuva">Tyydyttävä</option>
-							<option value="Esine">Välttävä</option>
-                        </select>
-                     </p>
-
-                    	<p>Esineen kuvaus:*<br>
-                     	<textarea name="content" rows="10" cols="73" minlength="10" maxlength="1000" required></textarea>
-                     </p>
-					 <p class="mini">Kuvaile esinettä mahdollisimman tarkasti 10-1000 sanalla</p>
-					 <p class="mini">* Merkityt kohdat ovat pakollisia</p>
-					 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-					 <input type="submit" class="button" value="Lähetä">
-				</form>
-
-
-            	</td>
-        		</tr>
-       	</table>
-     	</div>
-     	<div class="vaakaviiva">
-		</div>
-	{% endif %}
+{% endif %}
 
 
 </div>

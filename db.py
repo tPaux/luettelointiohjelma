@@ -1,7 +1,9 @@
 import sqlite3
 from flask import g
+import os
 
 def get_connection():
+    print("Opening DB:", os.path.abspath("database.db"))
     con = sqlite3.connect("database.db")
     con.set_trace_callback(print)
     con.execute("PRAGMA foreign_keys = ON")
@@ -9,8 +11,7 @@ def get_connection():
     return con
 
 def execute(sql, params):
-    con = sqlite3.connect("database.db")
-    con.row_factory = sqlite3.Row
+    con = get_connection()
     cur = con.cursor()
     cur.execute(sql, params)
     con.commit()

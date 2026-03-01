@@ -1,5 +1,5 @@
 import sqlite3
-from flask import Flask, redirect, render_template, request, session, abort, make_response
+from flask import Flask, redirect, render_template, request, session, abort, make_response, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 import db
 import config
@@ -9,10 +9,18 @@ import users
 import math
 import time
 import secrets
+import markupsafe
+import os
 from flask import g
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
+
+@app.template_filter()
+def show_lines(content):
+    content = str(markupsafe.escape(content))
+    content = content.replace("\n", "<br />")
+    return markupsafe.Markup(content)
 
 @app.route("/")
 @app.route("/<int:page>")
@@ -35,14 +43,17 @@ def index(page=1):
 def login():
 
     if request.method == "GET":
-        return render_template("login.html")
+        return render_template("login.html", next_page=request.referrer)
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
+        next_page = request.form.get("next_page") or "/"
 
         items = lists.get_items(1, 10)
         sql = "SELECT id, password_hash FROM users WHERE username = ?"
         rows = db.query(sql, [username])
+        page = 1
+        page_count = 10
         if not rows:
             return render_template("index.html", items=items, page=page, page_count=page_count, error="Väärä tunnus tai salasana")
         row = rows[0]
@@ -54,7 +65,7 @@ def login():
             session["user_id"] = user_id
             session["csrf_token"] = secrets.token_hex(16)
 
-            return redirect("/")
+            return redirect(next_page)
 
         else:
             return render_template("index.html", items=items, page=page, page_count=page_count, error="Väärä tunnus tai salasana")
@@ -73,22 +84,35 @@ def logout():
 @app.route("/create", methods=["POST"])
 def create():
 
+    print("DEBUG POST:", request.form)
+    print("DEBUG username:", repr(request.form.get("username")))
+
     username = request.form["username"]
+    if len(username) > 16:
+        abort(403)
     password1 = request.form["password1"]
     password2 = request.form["password2"]
-    items = lists.get_items(1, 10)
+    next_page = request.form.get("next_page") or "/"
+
     if password1 != password2:
-        return render_template("index.html", error="Salasanat eivät täsmää", items=items)
+        return render_template("register.html",
+                               error="Salasanat eivät täsmää",
+                               filled={"username": username},
+                               next_page=next_page)
+
     password_hash = generate_password_hash(password1)
 
     try:
         sql = "INSERT INTO users (username, password_hash) VALUES (?, ?)"
         db.execute(sql, [username, password_hash])
-    except (sqlite3.IntegrityError, sqlite3.OperationalError) as err:
-        return render_template("index.html", items=items, page=page, page_count=page_count, error="Tunnus on jo varattu")
+    except Exception:
+        return render_template("register.html",
+                               error="Tunnus on jo varattu",
+                               filled={"username": username},
+                               next_page=next_page)
 
-
-    return redirect("/")
+    flash("Tunnus luotu, voit nyt kirjautua sovellukseen.")
+    return redirect(next_page)
 
 
 
@@ -118,6 +142,10 @@ def new_item():
     content = request.form["content"]
     user_id = session["user_id"]
 
+    user = users.get_user(user_id)
+    if not user:
+        abort(404)
+
     if not ttyype or not author or not title or not condition or len(author) > 50 or len(author) < 2 or len(title) > 50 or len(title) < 2 or len(year) > 8 or len(year) < 1 or len(creator) > 50 or len(content) > 1000 or len(content) < 10 or not condition:
         abort(403)
 
@@ -125,14 +153,20 @@ def new_item():
         item_id = lists.add_item(ttyype, author, title, year, creator, condition, content, user_id)
     except sqlite3.IntegrityError:
         abort(403)
-
+    flash(f"{ttyype} lisätty tietokantaan")
     return redirect("/item/" + str(item_id))
 
 @app.route("/item/<int:item_id>")
 def show_item(item_id):
+    require_login()
+    #user_id = session["user_id"]
+    #user = users.get_user(user_id)
+    #if not user:
+    #    abort(404)
     item = lists.get_item(item_id)
     if not item:
             abort(404)
+
     items = lists.get_items(1, 10)
     return render_template("item.html", item=item, items=items)
 
@@ -140,6 +174,7 @@ def show_item(item_id):
 def edit_item(item_id):
     require_login()
     #check_csrf()
+    print("Before edit:", lists.get_item(item_id)) # ... editointi ...
     item = lists.get_item(item_id)
 
     if item is None:
@@ -159,28 +194,51 @@ def edit_item(item_id):
         content = request.form["content"]
         lists.update_item(item_id, ttyype, author, title, year, creator, condition, content)
 
-        return redirect("/")
+        if ttyype == "Esine":
+            flash(f"{ttyype}en muokkaus onnistui")
+        else:
+            flash(f"{ttyype}n muokkaus onnistui")
+            print("After edit:", lists.get_item(item_id))
+        return redirect("/item/" + str(item_id))
 
 @app.route("/remove/<int:item_id>", methods=["GET", "POST"])
 def remove_item(item_id):
     require_login()
     item = lists.get_item(item_id)
+    print("item", item)
+    print("item_id", item_id)
+    print("item_id:", item_id)
+    print("item from DB:", lists.get_item(item_id))
+
 
     if request.method == "GET":
         return render_template("remove.html", item=item)
     if request.method == "POST":
         if "continue" in request.form:
+            print("REMOVE ROUTE item_id:", item_id)
             lists.remove_item(item_id)
+            print("REMOVE ROUTE item_id:", item_id)
         return redirect("/")
 
-@app.route("/user/<int:user_id>")
-def show_user(user_id):
+@app.route("/user/<int:user_id>/")
+@app.route("/user/<int:user_id>/<int:page>")
+def show_user(user_id, page=1):
+    page_size = 5
     user = users.get_user(user_id)
     if not user:
         abort(404)
-    items = users.get_items(user_id)
-    items = sorted(items, key=lambda x: x["sent_at"])
-    return render_template("user.html", user=user, items=items, q=user_id)
+
+    items_count = users.items_count_for_user(user_id)
+    page_count = math.ceil(items_count / page_size)
+    page_count = max(page_count, 1)
+
+    if page < 1:
+        return redirect("/1")
+    if page > page_count:
+        return redirect("/" + str(page_count))
+    items = users.get_items(user_id, page, page_size)
+
+    return render_template("user.html", user=user, items=items, q=user_id, page=page, page_size=page_size, items_count=items_count, page_count=page_count)
 
 def require_login():
     if "user_id" not in session:
@@ -192,20 +250,18 @@ def add_image():
 
     if request.method == "GET":
         return render_template("add_image.html")
+    if request.method == "POST":
+        file = request.files["image"]
+        if not file.filename.endswith(".jpg"):
+            return render_template("add_image.html", error = "VIRHE: Lähettätämäsi tiedosto ei ole jpg-tiedosto", file=file)
 
-    file = request.files["image"]
-    if not file.filename.endswith(".jpg"):
-        return "VIRHE: väärä tiedostomuoto"
+        image = file.read()
+        if len(image) > 100 * 1024:
+            return render_template("add_image.html", error = "VIRHE: Lähettämäsi tiedosto on liian suuri", file=file, image=image)
 
-    image = file.read()
-
-    print("Tallennettavan kuvan koko:", len(image))
-    if len(image) > 100 * 1024:
-        return "VIRHE: liian suuri kuva"
-
-    user_id = session["user_id"]
-    users.update_image(user_id, image)
-    return redirect("/user/" + str(user_id))
+        user_id = session["user_id"]
+        users.update_image(user_id, image)
+        return redirect("/user/" + str(user_id))
 
 
 @app.route("/image/<int:user_id>")
@@ -217,6 +273,8 @@ def show_image(user_id):
     response = make_response(image)
     response.headers.set("Content-Type", "image/jpeg")
     return response
+
+
 
 @app.before_request
 def before_request():

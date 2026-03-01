@@ -88,6 +88,13 @@
 			</p>
 		</div>
 	{% endif %}
+	{% for message in get_flashed_messages() %}
+	<div class="error-box">
+		<p class="error">
+		{{ message }} &nbsp;
+		</p>
+	</div>
+  {% endfor %}
 </div>
 
 <!-- Hakukenttä -->
