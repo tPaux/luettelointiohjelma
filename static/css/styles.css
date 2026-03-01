@@ -31,10 +31,9 @@ h2 {
 h3 {
 	color: #000000;
 	font-family: 'Courier', 'Courier New', 'monospace';
-	font-size: 24px;
+	font-size: 20px;
 	font-weight: bolder;
 	text-transform: uppercase;
-	text-indent: 20px;
 	letter-spacing: 20px; 
 }
 
@@ -106,6 +105,10 @@ p.mini {
 	text-align: left;
 	font-size: 14px;
 	font-family: 'Helvetica', 'Arial', 'sans-serif';
+	font-weight: bold;
+	letter-spacing: 3px;
+	line-height: 1.5;
+	color: #cccccc;
 	padding: 5px;
 	margin: 5px;
 	width: 75%;
@@ -259,11 +262,11 @@ a:hover, a:active {
 }
 
 .paapalkkiheader {
-	width: 100%;
+	width: 720px;
 	background-color: #cccccc;
 	border: solid 5px #cccccc;
 	border-radius: 5px;
-	padding: 0px;
+	padding-left: 30px;
 }
 
 .paapalkkicontainer {

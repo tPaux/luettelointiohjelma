@@ -1,10 +1,8 @@
-
 <!DOCTYPE html>
 <html>
-
 <head>
-  <title>Esineen poisto</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>{{ item.title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 
 <body>
@@ -34,6 +32,11 @@
           <p>
             <input type="submit" class="button" value="Kirjaudu">
           </p>
+			{% if next_page %}
+				<input type="hidden" name="next_page" value="{{ next_page }}" />
+			{% else %}
+				<input type="hidden" name="next_page" value="/" />
+			{% endif %}
         </form>
 
       </td>
@@ -58,7 +61,7 @@
 				<form action="/create" method="post" >
 					<p>
 						Tunnus: <br />
-						<input type="text" name="username" class="inputlogin"/>
+						<input type="text" name="username" class="inputlogin" />
 					</p>
 					<p>
 						Salasana: <br />
@@ -68,7 +71,12 @@
 						Salasana uudestaan: <br />
 						<input type="password" name="password2" class="inputlogin" />
 					</p>
-						<input type="submit" value="Luo tunnus" class="button" />
+					<input type="submit" value="Luo tunnus" class="button"  >
+					{% if next_page %}
+						<input type="hidden" name="next_page" value="{{ next_page }}" />
+					{% else %}
+						<input type="hidden" name="next_page" value="/" />
+					{% endif %}
 				</form>
 			</td>
 		</tr>
@@ -112,6 +120,14 @@
 				<p class="outset">&nbsp; <a href="/user/{{ session.user_id }}"> oma sivu</a>
 				</p>
 			</td>
+
+
+			<td class="td">
+			<p class="outset"> &nbsp;
+				<a href="/new_item">lisää esine</a>
+			</p>
+			</td>
+
 			<td class="td">
 					<p class="outset">&nbsp; <a href="/logout">kirjaudu ulos</a>
 					</p>
@@ -133,28 +149,39 @@
 		</tr>
 	</table>
 </div>
-<!--Pääpalkki alkaa-->
+
+
+
+
 <div class="paapalkki">
 	<h2>luettelointiohjelma</h2>
-	<div class="vaakaviiva"></div>
+		<div class="vaakaviiva"></div>
 
-	<div class="paapalkkiheader">
+		<div class="paapalkkiheader">
+			<div class="headerinnerborder">
+				<p>
+					<h3> Kommentoi esinettä {{ item.title }}</h3>
+				</p>
+			</div>
+		</div>
+	<div class="paapalkkicontainer">
+    <p></p>
 
-      <h3>Lisää esineen kuva</h3>
-
-    </div>
-
-    <div class="paapalkkicontainer">
-
-    <form action="/add_item_image" method="post" enctype="multipart/form-data">
-      <p>
-        Kuva: <input type="file" name="image" accept=".jpg" />
-      </p>
-      <input type="submit" value="Lähetä" />
-    </form>
+        <form action="/item/{{ item.item_id }}/comment" method="POST">
+            <textarea name="content" rows="5" cols="60" maxlength="150" class="textbox"></textarea>
+            <br>
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+            <input type="submit" value="Lähetä kommentti" class="button">
+        </form>
+        <br />
+        <p><a href="/item/{{ item.item_id }}">Takaisin esineeseen</a></p>
     </div>
 </div>
 
 </body>
+</html>
 
+</div>
+
+</body>
 </html>

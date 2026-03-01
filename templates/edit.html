@@ -97,23 +97,13 @@
   {% endfor %}
 </div>
 
-<!-- Hakukenttä -->
-<div class="hakukentta">
-	<form action="/" method="get">
-		<input type="text" name="q" placeholder="Hae..." class="sendform"
-			value="{{ request.args.get('q', '') }}">
-		<input type="submit" value="Hae" class="button">
-	</form>
-</div>
+<!-- Linkit -->
+
 <div class="linkit">
 	<table class="table">
 		<tr>
 			<td class="td">
 				<p class="outset">&nbsp; <a href="/"> etusivu</a>
-				</p>
-			</td>
-			<td class="td">
-				<p class="outset">&nbsp; <a href="/user/{{ session.user_id }}"> oma sivu</a>
 				</p>
 			</td>
 				{% if session.username %}
@@ -151,46 +141,15 @@
 	</table>
 </div>
 
+
+
+
 <!--Pääpalkki alkaa-->
 <div class="paapalkki">
 	<h2>luettelointiohjelma</h2>
 	<div class="vaakaviiva">
 	</div>
 
-<!-- Hakutulokset-->
-   	{% if request.args.get('q') and items %}
-
-			<div class="hakutulokset">
-         	{% for item in items %}
-            	<div>
-              		<p><strong>Omistaja: {{ item[1] }}</strong></p>
-               	<table class="table">
-               		<tr>
-               			<th class="th">Esittäjä/Kirjailija/Muotoilija</th>
-               			<th class="th">Nimi</th>
-               			<th class="th">Vuosi</th>
-               			<th class="th">Tyyppi</th>
-               			<th class="th">Julkaisija</th>
-               			<th class="th">Kunto</th>
-               		</tr>
-               		<tr>
-               			<td class="td">{{ item[3] }}</td>   <!-- author 3 -->
-								<td class="td">{{ item['title'] }}</td>   <!-- title 4-->
-								<td class="td">{{ item['year'] }}</td>   <!-- year 6-->
-								<td class="td">{{ item['ttyype'] }}</td>   <!-- ttyype 2-->
-								<td class="td">{{ item['creator'] }}</td>   <!-- creator 5-->
-								<td class="td">{{ item['condition'] }}</td>   <!-- condition 7 -->
-							</tr>
-						</table>
-						<p>Esineen kuvaus: {{ item['content'] }}</p>
-                 	</div>
-         	{% endfor %}
-         </div>
-         <div class="vaakaviiva">
-		</div>
-     	{% else %}
-     		<p></p>
-		{% endif %}
 
 
 <!--Muokkaa objektia-->

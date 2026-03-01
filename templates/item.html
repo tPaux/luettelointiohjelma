@@ -201,7 +201,7 @@
             <td class="tditems">{{ item.sent_at }}</td>
         </tr>
         <tr>
-			<th></th>
+			<th class="th"> &nbsp;</th>
 			<td class="tditems">
 			 {% if session.get("user_id") and item['user_id'] == session["user_id"] %}
 				<p>
@@ -211,6 +211,27 @@
 			{% endif %}
 			</td>
         </tr>
+        <tr>
+			<th class="th"><p>Kommentit</p></th>
+			<td class="tditems">
+
+				{% for c in comments %}
+					<p><b>{{ c.username }}</b> ({{ c.sent_at }}):</p>
+					<br />
+					{{ c.content | show_lines }}
+					<hr>
+				{% endfor %}
+			</td>
+		</tr>
+		<tr>
+			<th class="th"></th>
+			<td class="tditems">
+				<p>
+					<a href="/item/{{ item.item_id }}/comment">Lisää kommentti</a>
+				</p>
+			</td>
+		</tr>
+
     </table>
 
 

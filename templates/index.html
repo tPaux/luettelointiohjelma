@@ -185,7 +185,9 @@
 						</tr>
 						<tr>
 							<th class="th">Nimi</th>
-							<td class="tditems">{{ item['title'] }}</td>
+							<td class="tditems">
+							<a href="/item/{{ item.item_id }}">{{ item['title'] }}</a>
+							</td>
 						</tr>
 						<tr>
 							<th class="th">Vuosi</th>
@@ -227,6 +229,14 @@
 								{% endif %}
 							</td>
 						</tr>
+						<tr>
+							<th class="th"></th>
+							<td class="tditems">
+								<p>
+									<a href="/item/{{ item.item_id }}/comment">Lisää kommentti</a>
+								</p>
+							</td>
+						</tr>
 					</table>
 				<hr />
 				</div>
@@ -250,17 +260,17 @@
 
 
 
-<!--3 viimeisintä esinettä-->
+<!--Kaikki esineet-->
 
 		<div class="paapalkkiheader">
 
-			<h3>kolme viimeisintä</h3>
+			<h3>Kaikki esineet</h3>
 
 		</div>
 
 		<div class="paapalkkicontainer">
 
-		{% for item in items[-3:] %}
+		{% for item in items %}
 			<div>
             <table class="table">
                 <tr>
@@ -269,7 +279,9 @@
 				</tr>
 				<tr>
                     <th class="th">Nimi</th>
-                    <td class="tditems">{{ item['title'] }}</td>
+                    <td class="tditems">
+                    <a href="/item/{{ item.item_id }}">{{ item['title'] }}</a>
+                    </td>
 				</tr>
 				<tr>
                     <th class="th">Vuosi</th>
@@ -313,12 +325,31 @@
 						{% endif %}
 					</td>
                 </tr>
+                <tr>
+					<th class="th"></th>
+					<td class="tditems">
+						<p>
+							<a href="/item/{{ item.item_id }}/comment">Lisää kommentti</a>
+						</p>
+					</td>
+				</tr>
             </table>
-
 
             <hr />
         </div>
     {% endfor %}
+     <table>
+		<tr>
+			<th></th>
+			<td>
+				<p>
+					<a href="/{{ page - 1 }}">&lt;&lt;</a>
+					Sivu {{ page }}/{{ page_count }}
+					<a href="/{{ page + 1 }}">&gt;&gt;</a>
+				</p>
+			</td>
+		</tr>
+	</table>
     </div>
     <div class="vaakaviiva">
 	</div>

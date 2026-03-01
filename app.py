@@ -25,7 +25,7 @@ def show_lines(content):
 @app.route("/")
 @app.route("/<int:page>")
 def index(page=1):
-    page_size = 10
+    page_size = 5
     items_count = lists.items_count()
     page_count = math.ceil(items_count / page_size)
     page_count = max(page_count, 1)
@@ -35,6 +35,8 @@ def index(page=1):
     if page > page_count:
         return redirect("/" + str(page_count))
     items = lists.get_items(page, page_size)
+    print(items)
+
 
     return render_template("index.html", items=items, page=page, page_count=page_count)
 
@@ -117,7 +119,7 @@ def create():
 @app.route("/search/<int:page>")
 def search(page=1):
     q = request.args.get("q")
-    page_size = 10
+    page_size = 5
     items_count = lists.search_count(q)
     page_count = math.ceil(items_count / page_size)
     items = lists.search(q)
@@ -164,11 +166,39 @@ def show_item(item_id):
     require_login()
 
     item = lists.get_item(item_id)
+    comments = lists.get_comments(item_id)
+    print("COMMENTS:", comments)
+
     if not item:
             abort(404)
 
     items = lists.get_items(1, 10)
-    return render_template("item.html", item=item, items=items)
+    return render_template("item.html", item=item, items=items, comments=comments)
+
+@app.route("/item/<int:item_id>/comment", methods=["GET", "POST"])
+def comment_form(item_id):
+    require_login()
+
+    item = lists.get_item(item_id)
+    if not item:
+        abort(404)
+
+    if request.method == "GET":
+        return render_template("comment.html", item=item)
+
+    check_csrf()
+    content = request.form["content"].strip()
+    user_id = session["user_id"]
+
+    if len(content) < 2 or len(content) > 500:
+        abort(403)
+
+    lists.add_comment(item_id, user_id, content)
+    flash("Kommentti lisätty")
+
+    return redirect(f"/item/{item_id}")
+
+
 
 @app.route("/edit/<int:item_id>", methods=["GET", "POST"])
 def edit_item(item_id):
@@ -205,11 +235,6 @@ def edit_item(item_id):
 def remove_item(item_id):
     require_login()
     item = lists.get_item(item_id)
-    print("item", item)
-    print("item_id", item_id)
-    print("item_id:", item_id)
-    print("item from DB:", lists.get_item(item_id))
-
 
     if request.method == "GET":
         return render_template("remove.html", item=item)
@@ -242,7 +267,8 @@ def show_user(user_id, page=1):
 
 def require_login():
     if "user_id" not in session:
-        abort(403)
+        flash("Kirjautuminen vaaditaan")
+        return redirect("/")
 
 @app.route("/add_image", methods=["GET", "POST"])
 def add_image():
@@ -273,7 +299,6 @@ def show_image(user_id):
     response = make_response(image)
     response.headers.set("Content-Type", "image/jpeg")
     return response
-
 
 
 @app.before_request

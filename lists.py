@@ -115,6 +115,22 @@ def search_count(q):
     return result[0]["cnt"]
 
 
+def add_comment(item_id, user_id, content):
+    sql = "INSERT INTO comments (item_id, user_id, content) VALUES (?, ?, ?)"
+    db.execute(sql, [item_id, user_id, content])
+
+def get_comments(item_id):
+    sql = """
+        SELECT c.id, c.content, c.sent_at, u.username
+        FROM comments c
+        JOIN users u ON c.user_id = u.id
+        WHERE c.item_id = ?
+        ORDER BY c.sent_at ASC
+    """
+    return db.query(sql, [item_id])
+
+
+
 
 
 
