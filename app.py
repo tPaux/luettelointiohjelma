@@ -84,21 +84,18 @@ def logout():
 @app.route("/create", methods=["POST"])
 def create():
 
-    print("DEBUG POST:", request.form)
-    print("DEBUG username:", repr(request.form.get("username")))
-
     username = request.form["username"]
     if len(username) > 16:
         abort(403)
     password1 = request.form["password1"]
     password2 = request.form["password2"]
     next_page = request.form.get("next_page") or "/"
+    items = lists.get_items(1, 10)
 
     if password1 != password2:
-        return render_template("register.html",
-                               error="Salasanat eivät täsmää",
+        return render_template("index.html", error="Salasanat eivät täsmää",
                                filled={"username": username},
-                               next_page=next_page)
+                               next_page=next_page, items=items)
 
     password_hash = generate_password_hash(password1)
 
@@ -106,10 +103,10 @@ def create():
         sql = "INSERT INTO users (username, password_hash) VALUES (?, ?)"
         db.execute(sql, [username, password_hash])
     except Exception:
-        return render_template("register.html",
+        return render_template("index.html",
                                error="Tunnus on jo varattu",
                                filled={"username": username},
-                               next_page=next_page)
+                               next_page=next_page, items=items)
 
     flash("Tunnus luotu, voit nyt kirjautua sovellukseen.")
     return redirect(next_page)
@@ -165,10 +162,7 @@ def new_item():
 @app.route("/item/<int:item_id>")
 def show_item(item_id):
     require_login()
-    #user_id = session["user_id"]
-    #user = users.get_user(user_id)
-    #if not user:
-    #    abort(404)
+
     item = lists.get_item(item_id)
     if not item:
             abort(404)
